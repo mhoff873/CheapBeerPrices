@@ -3,7 +3,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Cheap Beer State College</title>
+	<title>Cheap Beer Carlisle</title>
 	<style type="text/css">
 
 		/* Layout */
@@ -141,12 +141,12 @@
 
 	<header id="header">
 		<h1>Cheap Beer Prices</h1>
-		<h2>State College, PA</h2>
+		
 	</header>
 
 	<nav>
 			<ul>
-				<li id="top"><a href=index.php>Home<a></li>
+				<li id="top"><a href=stateCollege.html>Home<a></li>
 				<li id="top"><a href=locations.html>Locations<a></li>
 				<li id="top"><a href=aboutUs.html>About Us<a></li>
 				<li id="top"><a href=contactUs.html>Contact Us<a></li>
@@ -167,73 +167,84 @@
 				different vendors in the State College Area.
 				</p>
 				
-				<h3>How much does a 30 cost in State College, PA?</h3>
-				<table>
-					<tr>
-						<td>Beer</td>
-						<td>WR Hickey</td>
-						<td>Beer Belly's</td>
-						<td>Nittany Beverage Co.</td>
-						<td>Pletcher's</td>
-					</tr>
-					<tr>
-						<td>Natty</td>
-						<td>15.09</td>
-						<td>18.40</td>
-						<td>N/A</td>
-						<td>N/A</td>
-					</tr>
-					<tr>
-						<td>Bud Light</td>
-						<td>20.99</td>
-						<td>24.29</td>
-						<td>N/A</td>
-						<td>N/A</td>
-					</tr>
-					<tr>
-						<td>Budweiser</td>
-						<td>20.99</td>
-						<td>24.29</td>
-						<td>N/A</td>
-						<td>N/A</td>
-					</tr>
-					<tr>
-						<td>Miller Light</td>
-						<td>23.58</td>
-						<td>23.82</td>
-						<td>20.75</td>
-						<td>N/A</td>
-					</tr>
-					<tr>
-						<td>Coor's Light</td>
-						<td>23.58</td>
-						<td>23.83</td>
-						<td>N/A</td>
-						<td>N/A</td>
-					</tr>
-					<tr>
-						<td>Busch Light</td>
-						<td>17.45</td>
-						<td>19.10</td>
-						<td>N/A</td>
-						<td>N/A</td>
-					</tr>
-					<tr>
-						<td>PBR</td>
-						<td>N/A</td>
-						<td>22.93</td>
-						<td>N/A</td>
-						<td>N/A</td>
-					</tr>
-					<tr>
-						<td>Lion's Head (24)</td>
-						<td>N/A</td>
-						<td>16.04</td>
-						<td>N/A</td>
-						<td>12.50</td>
-					</tr>
-				</table>
-				<p>* prices last updated 11/27/2015</p>
+				<h3>How much does a 30 cost in Carlisle, PA?</h3>
+				
+				<table width="100%" border="1">
+					  <tbody>
+						<tr>
+						  <th width="24%" scope="col">Location</th>
+						  <th width="20%" scope="col">Natty </th>
+						  <th width="13%" scope="col">Bud Light</th>
+						  <th width="15%" scope="col">Coor's Light</th>
+						  <th width="28%" scope="col">Bud</th>
+						  <th width="28%" scope="col">Miller Light</th>
+						  <th width="28%" scope="col">Corona</th>
+						  <th width="28%" scope="col"><p>Busch Light</p></th>
+						  <th width="28%" scope="col">Micolob Ultra</th>
+						  <th width="28%" scope="col">Hienikin</th>
+						  <th width="28%" scope="col">Busch</th>
+						  <th width="28%" scope="col">Yueling Lager</th>
+						</tr>
+						<tr>
+						  <th scope="row">Beer &amp; Cigar</th>
+						  <td>15.09</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						</tr>
+						<tr>
+						  <th scope="row">Brew Through</th>
+						  <td>15.09</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						</tr>
+						<tr>
+						  <th scope="row">Bev Express</th>
+						  <td>13.99</td>
+						  <td>20.99</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						</tr>
+						<tr>
+						  <th scope="row">Stans</th>
+						  <td>15.09</td>
+						  <td>20.99</td>
+						  <td>20.99</td>
+						  <td>20.99</td>
+						  <td>20.99</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						  <td>&nbsp;</td>
+						</tr>
+					  </tbody>
+					</table>
+				
+				<p>* prices last updated Spring 2015</p>
 				<h3> Let us know what you paid! </h3>
 				<p> Beer buddy is a community that relies on people like you to share how much you paid for a case of brew.
 				Let us know how much they paid for a case a specific vendor, and we will publish it on our website.<p>
@@ -241,37 +252,6 @@
 				<p> beerpriceindex@gmail.com </p>
 			</article>								
 		</main>
-
-		<nav id="left" class="column">
-			<h3>New Locations Coming Soon</h3>
-			<ul>
-				<li><a href="#">Reading</a></li>
-				<li><a href="#">Kutztown</a></li>
-				<li><a href="carlisle.html">Carlisle</a></li>
-				<li><a href="#">Lewistown</a></li>
-				<li><a href="#">Harrisburg</a></li>
-				<li><a href="stateCollege.html">State College</a></li>
-
-			</ul>
-
-		</nav>
-
-		<div id="right" class="column">
-			<h3>Thank You</h3> 
-			<p> to our supporters</p>
-			<h4>Fratbench.com</h4>
-			<p> Serving all your fraternity bench needs </p>
-			<p> Benches and Blue Prints </p>
-			<p> check out our website below: </p>
-			<a href="http://www.fratbench.com">Fratbench.com</a>
-		</div>
-
-	</div>
-
-	<div id="footer-wrapper">
-		<footer id="footer"><p> cheapbeerpices.com - Copyright &copy;  2015</p></footer>
-	</div>
-
-</body>
-
-</html>
+<?php
+	include 'footer.php';
+?>
