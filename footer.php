@@ -1,8 +1,8 @@
 <nav id="left" class="column">
 			<h3> Locations</h3>
 			<ul>
-				<li><a href="carlisle.html">Carlisle</a></li>
-				<li><a href="stateCollege.html">State College</a></li>
+				<li><a href="carlisle.php">Carlisle</a></li>
+				<li><a href="stateCollege.php">State College</a></li>
 			</ul>
 
 			<h3>New Locations Coming Soon</h3>
