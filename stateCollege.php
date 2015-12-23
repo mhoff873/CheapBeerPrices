@@ -4,7 +4,7 @@
 		<main id="center" class="column">
 			<article>
 			
-				<h1>Find cheap beer in Carlisle, PA!</h1>
+				<h1>Find cheap beer in State College, PA!</h1>
 				<p>Are you spending to much on beer? Are you looking to save money and time without cutting back on alcohol consumption? 
 				If you answered yes to one of these questions, then you have come to the right place. Cheapbeerprices.com is a community that
 				allows you to see how much others paid for a case of beer in you area. The table below shows how much others paid for a case at 
