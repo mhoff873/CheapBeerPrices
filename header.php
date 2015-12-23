@@ -137,7 +137,7 @@
 		float:left;
 		padding-top: 10px;
 		padding-bottom: 10px;
-		padding-left: 10px;
+		padding-right: 10px;
 		border: black;
 		text-align: center;
 		list-style-type: none;

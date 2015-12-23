@@ -89,7 +89,6 @@
 
 <h3><center>Store Hours</center></h3>
 
-<ul>
 <li id="hours">
 <div>
 <table width="220" height= "253" border="1">
@@ -136,11 +135,11 @@
 </li>
 
 <li id="hours">
-<table width="240" height="253" border="1">
+<table width="250" height="253" border="1">
   <tbody>
     <tr>
-      <th width="127" scope="col">Beverage Express</th>
-      <th width="86" scope="col">
+      <th width="140" scope="col">Beverage Express</th>
+      <th width="110" scope="col">
       <?php
       	include 'bevExpressHours.php';
       ?>
