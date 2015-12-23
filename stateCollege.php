@@ -4,7 +4,7 @@
 		<main id="center" class="column">
 			<article>
 			
-				<h1>Find Cheap beer near you!</h1>
+				<h1>Find cheap beer in Carlisle, PA!</h1>
 				<p>Are you spending to much on beer? Are you looking to save money and time without cutting back on alcohol consumption? 
 				If you answered yes to one of these questions, then you have come to the right place. Cheapbeerprices.com is a community that
 				allows you to see how much others paid for a case of beer in you area. The table below shows how much others paid for a case at 
@@ -80,7 +80,7 @@
 				<p>* prices last updated 11/27/2015</p>
 				<h3> Let us know what you paid! </h3>
 				<p> Beer buddy is a community that relies on people like you to share how much you paid for a case of brew.
-				Let us know how much they paid for a case a specific vendor, and we will publish it on our website.<p>
+				Let us know how much you paid for a case at a specific vendor, and we will publish it on our website.<p>
 				<p> Email the location, price, and type of beer to:</p>
 				<p> beerpriceindex@gmail.com </p>
 			</article>								

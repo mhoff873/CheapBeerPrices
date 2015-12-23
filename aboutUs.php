@@ -5,7 +5,7 @@
 			<article>
 			
 				<h1>How We Started</h1>
-				<p>Cheapbeerprices.com started as a simple notebook that was passed between friends to keep track of where we could find the cheapest cases in our county. As Time went on and technology
+				<p>Cheapbeerprices.com started as a simple notebook that was passed between friends to keep track of where we could find the cheapest cases in our county. As time went on and technology
 				proliferated, we turned our simple notebook into a Google document, so we could better share and edit the information amongst ourselves. Thanks to this new innovation, we were also
 				able to share our research with people who were outside of our immediate circle of friends. As new viewers were added to our sheet, we realised how special our little beer-price book had become.
 				The next logical step was to share our findings with the world. We snapped up the domain for cheepbeerprices.com and began to publish our price list in a public space that anyone in the 

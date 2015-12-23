@@ -3,7 +3,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Cheap Beer State College</title>
+	<title>Cheap Beer Prices</title>
 	<style type="text/css">
 
 		/* Layout */
@@ -131,6 +131,16 @@
 		width:20%;
 		text-align:center;
 		background: #FCCE98;
+		}
+
+		#hours{
+		float:left;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		padding-left: 10px;
+		border: black;
+		text-align: center;
+		list-style-type: none;
 		}
 	</style>
 	

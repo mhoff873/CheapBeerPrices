@@ -7,7 +7,7 @@
 			
 				<h1>Email Adress</h1>
 				<p>
-				Contact us with any questions or report prices in your area </br>
+				Contact us with any questions or report prices in your area to:</br>
 				beerpriceindex@gmail.com
 				</p>
 				
