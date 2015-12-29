@@ -29,37 +29,37 @@
 	timezone_name_from_abbr('', -$_COOKIE['time_zone_offset']*60, $_COOKIE['time_zone_dst']) : $townTimezone);
 	$dateer = date_create("now", timezone_open($time_zone_name));
 	$hour24 = date_format($dateer, 'H'); //24 hour clock
-	$today = date_format($dateer, 'l'); //
+	$today = date_format($dateer, 'D'); //
 	$minute = date_format($dateer, 'i');
 	//IF THE HOUR IS 12am IT IS NOT 0am
 	$hour12=(!($hour24%12))?12:$hour24%12; //12 hour clock conversion
 	//AM OR PM
-	$dayTime = (
-	$hour24>=12 ?
-	"pm" : "am" );
+	$dayTime = date_format($dateer, 'a');//(
+	//$hour24>=12 ?
+	//"pm" : "am" );
 	//storeNames WILL BE GENERATED FROM AN SQL QUERY
 	//$storeNames=array("Stans Beverages","Beverage Express","Beer and Cigar","Beer Through");
 	//$numStores= 4; //FOREACH NAME
 	//
-	$StansBevHOpen=array('Monday' => '8','Tuesday' => '8','Wednesday' => '8','Thursday' => '8','Friday' => '8','Saturday' => '8','Sunday' => '10');
-	$StansBevMOpen=array('Monday' => '0','Tuesday' => '0','Wednesday' => '0','Thursday' => '0','Friday' => '0','Saturday' => '0','Sunday' => '0');
-	$StansBevHClose=array('Monday' => '21','Tuesday' => '21','Wednesday' => '21','Thursday' => '21','Friday' => '22','Saturday' => '22','Sunday' => '19');
-	$StansBevMClose=array('Monday' => '0','Tuesday' => '0','Wednesday' => '0','Thursday' => '0','Friday' => '0','Saturday' => '0','Sunday' => '0');
+	$StansBevHOpen=array('Mon' => '8','Tue' => '8','Wed' => '8','Thu' => '8','Fri' => '8','Sat' => '8','Sun' => '10');
+	$StansBevMOpen=array('Mon' => '0','Tue' => '0','Wed' => '0','Thu' => '0','Fri' => '0','Sat' => '0','Sun' => '0');
+	$StansBevHClose=array('Mon' => '21','Tue' => '21','Wed' => '21','Thu' => '21','Fri' => '22','Sat' => '22','Sun' => '19');
+	$StansBevMClose=array('Mon' => '0','Tue' => '0','Wed' => '0','Thu' => '0','Fri' => '0','Sat' => '0','Sun' => '0');
 	//
-	$bevExpHOpen=array('Monday' => '8','Tuesday' => '8','Wednesday' => '8','Thursday' => '8','Friday' => '8','Saturday' => '8','Sunday' => '9');
-	$bevExpMOpen=array('Monday' => '0','Tuesday' => '0','Wednesday' => '0','Thursday' => '0','Friday' => '0','Saturday' => '0','Sunday' => '0');
-	$bevExpHClose=array('Monday' => '21','Tuesday' => '21','Wednesday' => '21','Thursday' => '21','Friday' => '22','Saturday' => '22','Sunday' => '21');
-	$bevExpMClose=array('Monday' => '30','Tuesday' => '30','Wednesday' => '30','Thursday' => '30','Friday' => '30','Saturday' => '30','Sunday' => '0');
+	$bevExpHOpen=array('Mon' => '8','Tue' => '8','Wed' => '8','Thu' => '8','Fri' => '8','Sat' => '8','Sun' => '9');
+	$bevExpMOpen=array('Mon' => '0','Tue' => '0','Wed' => '0','Thu' => '0','Fri' => '0','Sat' => '0','Sun' => '0');
+	$bevExpHClose=array('Mon' => '21','Tue' => '21','Wed' => '21','Thu' => '21','Fri' => '22','Sat' => '22','Sun' => '21');
+	$bevExpMClose=array('Mon' => '30','Tue' => '30','Wed' => '30','Thu' => '30','Fri' => '30','Sat' => '30','Sun' => '0');
 	//	
-	$beerAndCigarHOpen=array('Monday' => '9','Tuesday' => '9','Wednesday' => '9','Thursday' => '9','Friday' => '9','Saturday' => '9','Sunday' => '11');
-	$beerAndCigarMOpen=array('Monday' => '0','Tuesday' => '0','Wednesday' => '0','Thursday' => '0','Friday' => '0','Saturday' => '0','Sunday' => '0');
-	$beerAndCigarHClose=array('Monday' => '21','Tuesday' => '21','Wednesday' => '21','Thursday' => '21','Friday' => '22','Saturday' => '22','Sunday' => '18');
-	$beerAndCigarMClose=array('Monday' => '0','Tuesday' => '0','Wednesday' => '0','Thursday' => '0','Friday' => '0','Saturday' => '0','Sunday' => '0');
+	$beerAndCigarHOpen=array('Mon' => '9','Tue' => '9','Wed' => '9','Thu' => '9','Fri' => '9','Sat' => '9','Sun' => '11');
+	$beerAndCigarMOpen=array('Mon' => '0','Tue' => '0','Wed' => '0','Thu' => '0','Fri' => '0','Sat' => '0','Sun' => '0');
+	$beerAndCigarHClose=array('Mon' => '21','Tue' => '21','Wed' => '21','Thu' => '21','Fri' => '22','Sat' => '22','Sun' => '18');
+	$beerAndCigarMClose=array('Mon' => '0','Tue' => '0','Wed' => '0','Thu' => '0','Fri' => '0','Sat' => '0','Sun' => '0');
 	//	
-	$beerThroughHOpen=array('Monday' => '8','Tuesday' => '8','Wednesday' => '8','Thursday' => '8','Friday' => '8','Saturday' => '8','Sunday' => '12');
-	$beerThroughMOpen=array('Monday' => '0','Tuesday' => '0','Wednesday' => '0','Thursday' => '0','Friday' => '0','Saturday' => '0','Sunday' => '0');
-	$beerThroughHClose=array('Monday' => '21','Tuesday' => '21','Wednesday' => '21','Thursday' => '21','Friday' => '22','Saturday' => '22','Sunday' => '17');
-	$beerThroughMClose=array('Monday' => '0','Tuesday' => '0','Wednesday' => '0','Thursday' => '0','Friday' => '0','Saturday' => '0','Sunday' => '0');	
+	$beerThroughHOpen=array('Mon' => '8','Tue' => '8','Wed' => '8','Thu' => '8','Fri' => '8','Sat' => '8','Sun' => '12');
+	$beerThroughMOpen=array('Mon' => '0','Tue' => '0','Wed' => '0','Thu' => '0','Fri' => '0','Sat' => '0','Sun' => '0');
+	$beerThroughHClose=array('Mon' => '21','Tue' => '21','Wed' => '21','Thu' => '21','Fri' => '22','Sat' => '22','Sun' => '17');
+	$beerThroughMClose=array('Mon' => '0','Tue' => '0','Wed' => '0','Thu' => '0','Fri' => '0','Sat' => '0','Sun' => '0');
 	//
 	//Every single store's time. based on numstores?
 	$HOpen=array($StansBevHOpen,$bevExpHOpen,$beerAndCigarHOpen,$beerThroughHOpen);
@@ -68,7 +68,7 @@
 	$MClose=array($StansBevMClose,$bevExpMClose,$beerAndCigarMClose,$beerThroughMClose);
 	//
 	//days IS COMPARED WITH THE OPEN/CLOSE ARRAYS KEY. IT IS ALSO USED TO GENERATE TABLE HEADERS
-	$days=array('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday');
+	$days=array('Mon','Tue','Wed','Thu','Fri','Sat','Sun');
 	//
 	function isOpen($storeID){
 		$HOpen=$GLOBALS['HOpen'];
@@ -122,7 +122,7 @@ echo"<span style='color:black;font-size:1em;'><b>Time: </b></span><span style='c
     echo"</tr>";
 	for ($stores = 0; $stores < $numStores; ++$stores) {
 		$storeName = mysql_result($result,$stores,"Name");
-		echo"<tr><th scope='col'>".$storeName." ".$storeName."</th><td>";
+		echo"<tr><th scope='col'>".$storeName."</th><td>";
 		isOpen($stores);    
 		echo"</td>";
 		for($i = 0; $i < 7; ++$i) {
