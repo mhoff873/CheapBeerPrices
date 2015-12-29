@@ -3,8 +3,7 @@
 	function cookies(){
 		return (isset($_COOKIE['time_zone_offset'],$_COOKIE['time_zone_dst']));
 	}
-	function db_connect()
-		{
+	function db_connect(){
 		$db_host = 'localhost';
 		$db_user= 'root';
 		$db_pass= 'Beer1234';
@@ -16,8 +15,7 @@
 			or die ("Cannot open $db_name:".mysql_error());
 		return $connection;
 	}
-	function db_close()
-	{
+	function db_close(){
 		global $connection;
 		mysql_close($connection);
 	}
@@ -40,8 +38,8 @@
 	$hour24>=12 ?
 	"pm" : "am" );
 	//storeNames WILL BE GENERATED FROM AN SQL QUERY
-	$storeNames=array("Stans Beverages","Beverage Express","Beer and Cigar","Beer Through");
-	$numStores= 4; //FOREACH NAME
+	//$storeNames=array("Stans Beverages","Beverage Express","Beer and Cigar","Beer Through");
+	//$numStores= 4; //FOREACH NAME
 	//
 	$StansBevHOpen=array('Monday' => '8','Tuesday' => '8','Wednesday' => '8','Thursday' => '8','Friday' => '8','Saturday' => '8','Sunday' => '10');
 	$StansBevMOpen=array('Monday' => '0','Tuesday' => '0','Wednesday' => '0','Thursday' => '0','Friday' => '0','Saturday' => '0','Sunday' => '0');
@@ -102,6 +100,10 @@ echo"	<main id='center' class='column'>
 <h1 style='text-align:center;'>Cheap beer prices of ".$town.", ".$state.".</h1><hr>
 <h3><center>Store Hours</center></h3>";
 db_connect();
+	$query = "SELECT * FROM Vendors WHERE Town = 'Carisle'";
+	$result = mysql_query($query);
+	$numStores = mysql_numrows($result);
+	
 /* DETECTS IF COOKIES WERE SETS
    DEFAULT TIMEZONE IS TIMEZONE OF STORE */
 if(cookies())
@@ -119,7 +121,8 @@ echo"<span style='color:black;font-size:1em;'><b>Time: </b></span><span style='c
     }
     echo"</tr>";
 	for ($stores = 0; $stores < $numStores; ++$stores) {
-		echo"<tr><th scope='col'>".$storeNames[$stores]."</th><td>";
+		$storeName = mysql_result($result,$stores,"Name");
+		echo"<tr><th scope='col'>".$storeName." ".$storeName."</th><td>";
 		isOpen($stores);    
 		echo"</td>";
 		for($i = 0; $i < 7; ++$i) {
