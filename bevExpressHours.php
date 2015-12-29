@@ -1,7 +1,7 @@
 <?php
-	$day = date(D);
-	$hour = date(G);
-	$min = date(i);
+	$day = date('D');
+	$hour = date('G');
+	$min = date('i');
 	$time;
 
 	if($day=="Mon" || $day=="Tue" || $day=="Wed" || $day=="Thu"){

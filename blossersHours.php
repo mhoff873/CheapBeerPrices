@@ -1,6 +1,6 @@
 <?php
-	$day = date(D);
-	$hour = date(G);
+	$day = date('D');
+	$hour = date('G');
 	$time;
 
 	if($day=="Mon" || $day=="Tue" || $day=="Wed" || $day=="Thu"){
