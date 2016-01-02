@@ -6,7 +6,7 @@
 			<article>
 			
 				<h1>Find Cheap Beer In:</h1>
-				</p>
+				<!--</p>
 				<a href=stateCollege.php>State College<a>
 				<a href=carlisle.php>Carlisle<a>
 				</p>
@@ -14,7 +14,7 @@
 				<p>Reading</p>
 				<p>Kutztown</p>
 				<p>Lewistown<p>
-				<p>Harrisburg</p>
+				<p>Harrisburg</p>-->
 				
 			</article>								
 		</main>

@@ -4,7 +4,7 @@
 	function cookies(){
 		return (isset($_COOKIE['time_zone_offset'],$_COOKIE['time_zone_dst']));
 	}
-	function db_connect(){
+	function db_connect1(){
 		$db_host = 'localhost';
 		$db_user= 'root';
 		$db_pass= 'Beer1234';
@@ -18,14 +18,14 @@
 			or die ("Cannot open $db_name:".mysql_error());
 		return $connection;
 	}
-	function db_close(){
+	function db_close1(){
 		global $connection;
 		mysql_close($connection);
 	}
-	db_connect(); //CONNECT TO DATABASE RIGHT AWAY
+	db_connect1(); //CONNECT TO DATABASE RIGHT AWAY
 	//LOCATION VARS
-	$town="Carlisle";
-	$state="PA";
+	$town=$_POST['location'];
+	$state=$_POST['state'];
 	$townTimezone="America/New_York";
 	$time_zone_name = ( 
 	//IF THERE ARE COOKIES, SET CORRECT TIMEZONE, OTHERWISE TIMEZONE IS "America/New_York"
@@ -46,7 +46,7 @@
 		$today=$GLOBALS['today'];
 		$hour = $GLOBALS['hour24']; //private $hour is based off 24 hour clock of client
 		$minute = $GLOBALS['minute'];
-		$query = "SELECT * FROM Vendors WHERE Town = 'Carisle'";
+		$query = "SELECT * FROM Vendors WHERE Town = '$_POST[location]'";
 		$townVendors = mysql_query($query);
 		//OPENING TIME
 		$H24Open = mysql_result($townVendors,$storeQueryRow,"H24Open".$today);
@@ -90,7 +90,7 @@ echo"<span style='color:black;font-size:1em;'><b>Time: </b></span><span style='c
     <table width='100%' border='1'><tbody>
     <tr><th scope='col'>Store</th><th scope='col'>Open?</th>";
     //gets the vendor information for the rows of rhte table
-    $query = "SELECT * FROM Vendors WHERE Town = 'Carisle'";
+    $query = "SELECT * FROM Vendors WHERE Town = '$town' AND State ='$state'";
     $townVendors = mysql_query($query);
     $numStores = mysql_numrows($townVendors);
 	
@@ -115,8 +115,8 @@ echo"<span style='color:black;font-size:1em;'><b>Time: </b></span><span style='c
 			$H12Close = (!($H24Close%12))?12:$H24Close%12;
 			$MClose=mysql_result($townVendors,$stores,"MClose".$days[$i]);
 			//OPENING OR CLOSING IN AM OR PM
-			$OdayTime = ($H24Open>=12 ? "pm" : "am" );
-			$CdayTime = ($H24Close>=12 ? "pm" : "am" );
+			$OdayTime = ($H24Open >= 12 ? "pm" : "am" );
+			$CdayTime = ($H24Close >= 12 ? "pm" : "am" );
 			//OPENING TIME
 			if($MOpen == 0){
 				if($H24Open == 0){
@@ -147,9 +147,9 @@ echo"<span style='color:black;font-size:1em;'><b>Time: </b></span><span style='c
 	</tbody>
 	</table>
 	</div>
-	</li>
+	</li>";
 				
-				<h3>How much does a 30 cost in Carlisle, PA?</h3>
+				/* <h3>How much does a 30 cost in Carlisle, PA?</h3>
 				<table>
 					<tr>
 						<td>Beer</td>
@@ -220,10 +220,10 @@ echo"<span style='color:black;font-size:1em;'><b>Time: </b></span><span style='c
 				<p> Beer buddy is a community that relies on people like you to share how much you paid for a case of brew.
 				Let us know how much you paid for a case at specific vendor, and we will publish it on our website.<p>
 				<p> Email the location, price, and type of beer to:</p>
-				<p> beerpriceindex@gmail.com </p>		
-
-	</article>								
-	</main>";
+				<p> beerpriceindex@gmail.com </p> "*/		
+ 
+	echo"</article>								
+	</main>";db_close1(); 
 	include 'footer.php';
-	db_close(); //CLOSES DATABASE CONNECTION AT END
+	//CLOSES DATABASE CONNECTION AT END
 ?>
