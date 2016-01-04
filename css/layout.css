@@ -96,16 +96,16 @@ body {
 		#header, #footer {
 			font-size: large;
 			padding: 0.3em;
-			background: #3366ff;
+			background: #6699ff;
 			text-align: center;
 		}
 
 		#left {
-			background: #66ccff;
+			background: #99ccff;
 		}
 		
 		#right {
-			background: #99ccff;
+			background: #ccffff;
 		}
 
 		#center {

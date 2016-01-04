@@ -12,7 +12,7 @@
 <body>
 
 	<header id="header">
-		<h1><font color="white">CheapBeerPrices.com</font></h1>
+		<h1>CheapBeerPrices.com</h1>
 	</header>
 
 	<nav>
