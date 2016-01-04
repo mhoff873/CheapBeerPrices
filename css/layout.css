@@ -85,7 +85,7 @@ body {
 		}
 		
 		nav ul a {
-			color: darkgreen;
+			color: black;
 			text-decoration: none;
 		}
 
@@ -96,16 +96,16 @@ body {
 		#header, #footer {
 			font-size: large;
 			padding: 0.3em;
-			background: #BCCE98;
+			background: #3366ff;
 			text-align: center;
 		}
 
 		#left {
-			background: #DAE9BC;
+			background: #66ccff;
 		}
 		
 		#right {
-			background: #F7FDEB;
+			background: #99ccff;
 		}
 
 		#center {
@@ -123,7 +123,7 @@ body {
 		border: black;
 		width:20%;
 		text-align:center;
-		background: #FCCE98;
+		background: #6699ff;
 		}
 
 		#hours{
