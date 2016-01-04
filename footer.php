@@ -57,7 +57,8 @@
 
 		<div id="right" class="column">
 			<h3>Thank You</h3>
-			<p> to our supporters</p>
+			<p> supporters</p>
+			<img src="fratbenchLogo.jpg" style="width:100px;">
 			<h4>Fratbench.com</h4>
 			<p> Serving all your fraternity bench needs </p>
 			<p> Benches and Blue Prints </p>
