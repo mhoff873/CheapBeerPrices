@@ -86,7 +86,7 @@ body {
 		
 		nav ul a {
 			color: dark blue;
-			text-decoration: none; 
+			text-decoration: none;
 		}
 
 		table, th, td {
@@ -104,15 +104,24 @@ body {
 			background: lightblue;
 		}
 		
+		#left p{
+			color: white;
+		}
+		
 		#right {
 			background-image: url("wood.jpeg");
 		}
-
-		.right p {
+		
+		#right p{
 			color: lightgray;
 		}
-		.right h4 {
-			color:lightgray;
+
+		#right h3{
+			color: lightgray;
+		}
+
+		#right h4{
+			color: lightgray;
 		}
 
 		#center {
@@ -132,10 +141,37 @@ body {
 		text-align:center;
 		background: #99ccff;
 		}
+		
+		.tabRight{
+		float:right;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		/*border-style:solid;
+		border-width:thin;
+		border-color:black;*/
+		width:49%;
+		text-align:center;
+		}
+		
+		.tabLeft{
+		float:left;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		/*border-style:solid;
+		border-width:thin;
+		border-color:black;*/
+		width:49%;
+		text-align:center;
+		}
 
 		#hours{
 		border: black;
 		text-align: center;
 		list-style-type: none;
 		width:100%;
+		}
+		
+		#map {
+        height: 350px;
+		width: 80%;
 		}

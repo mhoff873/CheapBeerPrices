@@ -5,8 +5,8 @@
 		$db_user= 'root';
 		$db_pass= 'Beer1234';
 		//$db_pass='';
-		$db_name= 'CheapBeer';
-		//$db_name= 'cheapbeerprices';
+		//$db_name= 'CheapBeer';
+		$db_name= 'cheapbeerprices';
 		global $connection;
 		$connection = mysql_connect($db_host,$db_user,$db_pass) 
 			or die ("cannot connect to $db_host as $db_user".mysql_error());
@@ -42,7 +42,7 @@
 							echo"<li>
 								<form action='location.php' method='post'>
 								<input type='hidden' name='state' value='$state'/>
-								<input type='submit' name='location' value='$town' style='border:solid;border-width:1px;height:2em;margin-top:2px;margin-bottom:2px;font-size:1.2em;width:96%;background:#BCCE98;'/>
+								<input type='submit' name='location' value='$town' style='border:solid;border-width:1px;height:2em;margin-top:2px;margin-bottom:2px;font-size:1.2em;width:96%;background:lightblue;'/>
 								</form>
 							    </li>";
 						} 
@@ -63,10 +63,10 @@
 				<h4>Fratbench.com</h4>
 				<p> Serving all your fraternity bench needs </p>
 				<p> Benches and Blue Prints </p>
-				<p> check out our website below: </p>
+				<p> Click to check out our website</p>
 				</center>
 			</div>
-		</a>>
+		</a>
 </div>
 
 	<div id="footer-wrapper">
