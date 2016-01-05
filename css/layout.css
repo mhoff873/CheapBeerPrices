@@ -108,6 +108,13 @@ body {
 			background-image: url("wood.jpeg");
 		}
 
+		.right p {
+			color: lightgray;
+		}
+		.right h3 {
+			color:lightgray;
+		}
+
 		#center {
 			background: #fff;
 		}
