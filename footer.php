@@ -60,7 +60,7 @@
 				<h3>Thank You</h3>
 				<p> supporters</p>
 				<img src="fratbenchLogo.png" style="width:100px;">
-				<h3>Fratbench.com</h3>
+				<h4>Fratbench.com</h4>
 				<p> Serving all your fraternity bench needs </p>
 				<p> Benches and Blue Prints </p>
 				<p> check out our website below: </p>
