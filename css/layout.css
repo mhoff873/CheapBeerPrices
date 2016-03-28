@@ -175,3 +175,13 @@ body {
         height: 350px;
 		width: 80%;
 		}
+		
+		.distributor{			
+		width:47%;
+		margin:1%;
+		display:inline-block;
+		vertical-align:top;
+		border:solid;
+		border-width:thin;
+		border-color:silver;
+		}
