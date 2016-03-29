@@ -89,9 +89,9 @@ body {
 			text-decoration: none;
 		}
 
-		table, th, td {
+		/* table, th, td {
 			border: 1px solid black;
-		}
+		} */
 		
 		#header, #footer {
 			font-size: large;
@@ -144,8 +144,7 @@ body {
 		
 		.tabRight{
 		float:right;
-		padding-top: 10px;
-		padding-bottom: 10px;
+		padding-top: 5px;
 		/*border-style:solid;
 		border-width:thin;
 		border-color:black;*/
@@ -156,7 +155,6 @@ body {
 		.tabLeft{
 		float:left;
 		padding-top: 10px;
-		padding-bottom: 10px;
 		/*border-style:solid;
 		border-width:thin;
 		border-color:black;*/
@@ -172,8 +170,13 @@ body {
 		}
 		
 		#map {
-        height: 350px;
+		height: 24em;
 		width: 80%;
+		}
+		
+		#indexMap {
+		height: 24em;
+		width: 100%;
 		}
 		
 		.distributor{			

@@ -55,7 +55,7 @@ else
     $mysql_password = 'Beer1234';
 
     /*** database name ***/
-    $mysql_dbname = 'cheapbeer';
+    $mysql_dbname = 'CheapBeer';
 
     try
     {

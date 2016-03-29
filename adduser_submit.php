@@ -1,17 +1,16 @@
 <?php
-
 /*** begin our session ***/
 session_start();
 
-/*** check if the users is already logged in ***/
-if(isset( $_SESSION['user_id'] ))
-{
-    $message = 'Users is already logged in';
-}
-/*** check that both the username, password have been submitted ***/
-if(!isset( $_POST['phpro_username'], $_POST['phpro_password']))
+/*** first check that both the username, password and form token have been sent ***/
+if(!isset( $_POST['phpro_username'], $_POST['phpro_password'], $_POST['form_token']))
 {
     $message = 'Please enter a valid username and password';
+}
+/*** check the form token is valid ***/
+elseif( $_POST['form_token'] != $_SESSION['form_token'])
+{
+    $message = 'Invalid form submission';
 }
 /*** check the username is the correct length ***/
 elseif (strlen( $_POST['phpro_username']) > 20 || strlen($_POST['phpro_username']) < 4)
@@ -65,9 +64,8 @@ else
         /*** set the error mode to excptions ***/
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        /*** prepare the select statement ***/
-        $stmt = $dbh->prepare("SELECT phpro_user_id, phpro_username, phpro_password FROM phpro_users 
-                    WHERE phpro_username = :phpro_username AND phpro_password = :phpro_password");
+        /*** prepare the insert ***/
+        $stmt = $dbh->prepare("INSERT INTO phpro_users (phpro_username, phpro_password ) VALUES (:phpro_username, :phpro_password )");
 
         /*** bind the parameters ***/
         $stmt->bindParam(':phpro_username', $phpro_username, PDO::PARAM_STR);
@@ -76,32 +74,24 @@ else
         /*** execute the prepared statement ***/
         $stmt->execute();
 
-        /*** check for a result ***/
-        $user_id = $stmt->fetchColumn();
+        /*** unset the form token session variable ***/
+        unset( $_SESSION['form_token'] );
 
-        /*** if we have no result then fail boat ***/
-        if($user_id == false)
-        {
-                $message = 'Login Failed';
-        }
-        /*** if we do have a result, all is well ***/
-        else
-        {
-                /*** set the session user_id variable ***/
-                $_SESSION['user_id'] = $user_id;
-
-                /*** tell the user we are logged in ***/
-				header('Location: priceInsert.php');
-
-                //$message = 'You are now logged in';
-        }
-
-
+        /*** if all is done, say thanks ***/
+        $message = 'New user added';
     }
     catch(Exception $e)
     {
-        /*** if we are here, something has gone wrong with the database ***/
-        $message = 'We are unable to process your request. Please try again later"';
+        /*** check if the username already exists ***/
+        if( $e->getCode() == 23000)
+        {
+            $message = 'Username already exists';
+        }
+        else
+        {
+            /*** if we are here, something has gone wrong with the database ***/
+            $message = 'We are unable to process your request. Please try again later"';
+        }
     }
 }
 ?>
