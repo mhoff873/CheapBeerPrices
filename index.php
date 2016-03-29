@@ -6,8 +6,8 @@ function db_connect1(){
 	$db_user= 'root';
 	$db_pass= 'Beer1234';
 		//$db_pass='';
-		$db_name= 'CheapBeer';
-	//$db_name= 'cheapbeerprices';
+		//$db_name= 'CheapBeer';
+	$db_name= 'cheapbeerprices';
 	global $connection;
 	$connection = mysql_connect($db_host,$db_user,$db_pass) 
 		or die ("cannot connect to $db_host as $db_user".mysql_error());
@@ -162,20 +162,12 @@ function initMap() {
 	  center: new google.maps.LatLng(40, -75), //should be set to client's closest location
 	  mapTypeId: google.maps.MapTypeId.ROADMAP
 	});
-	
-	var showPosition = function (position) 
-           {
-            indexMap.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude), 10);
-		}
-	             navigator.geolocation.getCurrentPosition(showPosition);  
-	
 	var marker, i;
 	for (i = 0; i < numFill; i++) { 
 		var marker = new google.maps.Marker({
 			position: new google.maps.LatLng(toFill[i]['latitude'], toFill[i]['longitude']),
 			map: indexMap });
 			
-		
 		/* var showPosition = function(position)
 		{
 			indexMap.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude),10);
