@@ -40,14 +40,14 @@ echo"<main id='center' class='column'>
 	   openFri,closeFri,
 	   openSat,closeSat,
 	   Name,patchHours 
-	   FROM Vendors 
+	   FROM vendors 
 	   WHERE Location = '".$_GET['loc']."' 
 	   AND patchHours = 1";
 	   $locationVendorsToFill = mysql_query($query);
 	   $numLocationVendorsToFill = mysql_numrows($locationVendorsToFill);
 	   
 	   $query = "SELECT ID,place_id
-	   FROM Vendors 
+	   FROM vendors 
 	   WHERE Location = '".$_GET['loc']."' 
 	   AND patchHours = 0";
 	   $locationVendorsLookup = mysql_query($query);

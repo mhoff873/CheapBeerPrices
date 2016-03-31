@@ -1,9 +1,5 @@
 <?php 
 	include 'header.php';
-	//RETURNS TRUE WHEN COOKIES ARE SET
-	function cookies(){
-		return (isset($_COOKIE['time_zone_offset'],$_COOKIE['time_zone_dst']));
-	}
 	function db_connect1(){
 		$db_host = 'localhost';
 		$db_user= 'root';
@@ -24,206 +20,244 @@
 	}
 	db_connect1(); //CONNECT TO DATABASE RIGHT AWAY
 	//LOCATION VARS
-	$town=$_POST['location'];
-	$state=$_POST['state'];
-	$townTimezone="America/New_York";
-	$time_zone_name = ( 
-	//IF THERE ARE COOKIES, SET CORRECT TIMEZONE, OTHERWISE TIMEZONE IS "America/New_York"
-	cookies()?
-	timezone_name_from_abbr('', -$_COOKIE['time_zone_offset']*60, $_COOKIE['time_zone_dst']) : $townTimezone);
-	$dateer = date_create("now", timezone_open($time_zone_name));
-	$hour24 = date_format($dateer, 'H'); //24 hour clock
-	$today = date_format($dateer, 'D'); //
-	$minute = date_format($dateer, 'i');
-	//IF THE HOUR IS 12am IT IS NOT 0am
-	$hour12=(!($hour24%12))?12:$hour24%12; //12 hour clock conversion
-	//AM OR PM
-	$dayTime = date_format($dateer, 'a');//(
-	//used for simply indexing days of week
-	$days=array('Mon','Tue','Wed','Thu','Fri','Sat','Sun');
-	//
-	function isOpen($storeQueryRow){
-		$today=$GLOBALS['today'];
-		$hour = $GLOBALS['hour24']; //private $hour is based off 24 hour clock of client
-		$minute = $GLOBALS['minute'];
-		$query = "SELECT * FROM Vendors WHERE Town = '$_POST[location]'";
-		$townVendors = mysql_query($query);
-		//OPENING TIME
-		$H24Open = mysql_result($townVendors,$storeQueryRow,"H24Open".$today);
-		$MOpen=mysql_result($townVendors,$storeQueryRow,"MOpen".$today);
-		//CLOSING TIME
-		$H24Close = mysql_result($townVendors,$storeQueryRow,"H24Close".$today);
-		$MClose=mysql_result($townVendors,$storeQueryRow,"MClose".$today);
-		//Checkmark and X for open and close
-		$open=json_decode('"\u2713"');
-		$closed=json_decode('"\u2718"');
+	$location=$_GET['loc'];
+	$state=$_GET['state'];
+echo"<main id='center' class='column'>
+	<article>
+	<h1 style='text-align:center;'>".$location.", ".$state.".</h1><hr>
+	<h3><center>Beer Distributors</center></h3>
+	<p style='text-align:center'>Click any store for more information</p>
+	<ul id='wrapper' style='padding:0;margin:0;width:100%;height:100%;list-style-type:none;'></ul>";
 		
-		if($H24Open<= $hour && $hour <= $H24Close ){
-			if($H24Open== $hour || $hour == $H24Close ){
-				if($MOpen<= $minute || $minute < $MClose )
-					echo"<p style='color:lightgreen;font-size:1.5em;font-weight: bold'>".$open."</p>";
-				else
-					echo"<p style='color:red;font-size:1.5em;'>".$closed."</p>";
-			}else{
-				echo"<p style='color:lightgreen;font-size:1.5em;font-weight: bold'>".$open."</p>";
-			}
-		}else{
-			echo"<p style='color:red;font-size:1.5em;'>".$closed."</p>";
-		}	
-	} /*END OF isOpen() */
-	////INDENTATION REDUCED 
-echo"	<main id='center' class='column'>
-<article>
-<h1 style='text-align:center;'>Cheap beer prices of ".$town.", ".$state.".</h1><hr>
-<h3><center>Store Hours</center></h3>";
+	  $query = "SELECT place_id,ID,
+	   address,phoneNumber,website,
+	   location,state,latitude,longitude,County,
+	   openSun,closeSun,
+	   openMon,closeMon,
+	   openTue,closeTue,
+	   openWed,closeWed,
+	   openThu,closeThu,
+	   openFri,closeFri,
+	   openSat,closeSat,
+	   Name,patchHours 
+	   FROM Vendors 
+	   WHERE Location = '".$_GET['loc']."' 
+	   AND patchHours = 1";
+	   $locationVendorsToFill = mysql_query($query);
+	   $numLocationVendorsToFill = mysql_numrows($locationVendorsToFill);
+	   
+	   $query = "SELECT ID,place_id
+	   FROM Vendors 
+	   WHERE Location = '".$_GET['loc']."' 
+	   AND patchHours = 0";
+	   $locationVendorsLookup = mysql_query($query);
+	   $numLocationVendorsLookup = mysql_numrows($locationVendorsLookup);
+	   //ARRAYS TO JSON ENCODE
+	   $vendorPlaceID=array(); //Google place_id
+	   $toFill=array();        //Local database columns
+	   $idToFill=array();	//array to hold id's of places to fill
+	   $idToLookup=array();	//array to hold id's of places to lookup
+	   
+	   
+	   for($v=0;$v<$numLocationVendorsLookup;++$v){
+		   $id = mysql_result($locationVendorsLookup,$v,"ID");
+		   array_push($vendorPlaceID,mysql_result($locationVendorsLookup,$v,"place_id"));
+		   array_push($idToLookup,$id); //holds all ids for google lookup
+	   }
+	   for($v=0;$v<$numLocationVendorsToFill;++$v){
+		   //this page does not need store hours for everyday. just "today"
+		   $id = mysql_result($locationVendorsToFill,$v,"ID");
+		   array_push($idToFill,$id); //holds all ids for local fill
+		   array_push($toFill,array(  ///all information
+			$id."name" => mysql_result($locationVendorsToFill,$v,"Name"),
+			$id."location"=> mysql_result($locationVendorsToFill,$v,"Location"),
+			$id."state"=>mysql_result($locationVendorsToFill,$v,"State"),
+			$id."phoneNumber"=>mysql_result($locationVendorsToFill,$v,"phoneNumber"),
+			$id."website"=>mysql_result($locationVendorsToFill,$v,"website"),
+			$id."latitude"=>mysql_result($locationVendorsToFill,$v,"latitude"),
+			$id."longitude"=>mysql_result($locationVendorsToFill,$v,"longitude"),
+			$id."county"=>mysql_result($locationVendorsToFill,$v,"County"),
+			$id."address" => mysql_result($locationVendorsToFill,$v,"address"),
+			$id."phoneNumber" => mysql_result($locationVendorsToFill,$v,"phoneNumber"),
+			$id."website" => mysql_result($locationVendorsToFill,$v,"website"),
+			$id."openMon" => mysql_result($locationVendorsToFill,$v,"openMon"),
+			$id."closeMon" => mysql_result($locationVendorsToFill,$v,"closeMon"),
+			$id."openTue" => mysql_result($locationVendorsToFill,$v,"openTue"),
+			$id."closeTue" => mysql_result($locationVendorsToFill,$v,"closeTue"),
+			$id."openWed" => mysql_result($locationVendorsToFill,$v,"openWed"),
+			$id."closeWed" => mysql_result($locationVendorsToFill,$v,"closeWed"),
+			$id."openThu" => mysql_result($locationVendorsToFill,$v,"openThu"),
+			$id."closeThu" => mysql_result($locationVendorsToFill,$v,"closeThu"),
+			$id."openFri" => mysql_result($locationVendorsToFill,$v,"openFri"),
+			$id."closeFri" => mysql_result($locationVendorsToFill,$v,"closeFri"),
+			$id."openSat" => mysql_result($locationVendorsToFill,$v,"openSat"),
+			$id."closeSat" => mysql_result($locationVendorsToFill,$v,"closeSat"),
+			$id."openSun" => mysql_result($locationVendorsToFill,$v,"openSun"),
+			$id."closeSun" => mysql_result($locationVendorsToFill,$v,"closeSun")));
+	   }
+?>
+<script type="text/javascript">
+	//regular javascript globals
+	totalVendors = 0;
+	timeText = "";
+	days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];		  
+	<?php
+	//globals coming from php
+		if($toFill){
+			echo "var idToFill  = ".json_encode($idToFill, JSON_PRETTY_PRINT) . ";\n";
+			echo "var toFill = ". json_encode($toFill, JSON_PRETTY_PRINT) . ";\n";
+			echo "var numLocalVendorsToFill = ". json_encode($numLocationVendorsToFill) . ";\n";
+		}else{echo"var numLocalVendorsToFill = 0;";}
+		if($vendorPlaceID){
+			echo "var idToLookup  = ".json_encode($idToLookup, JSON_PRETTY_PRINT) . ";\n";
+			echo "var localVendorsIDLookup = ". json_encode($vendorPlaceID) . ";\n";
+			echo "var numLocalVendorsLookup = ". json_encode($numLocationVendorsLookup) . ";\n";
+		}else{echo"var numLocalVendorsLookup = 0;";}
+?>
+function initMap() {
+	  var map = new google.maps.Map(document.createElement('div'));
+	  var infowindow = new google.maps.InfoWindow();
+	  var service = new google.maps.places.PlacesService(map);
+	  
+	  for (var v = 0; v < numLocalVendorsToFill;v++){
+		  var id = idToFill[v];
+		  var opening = new Date();
+		  var today = opening.getDay();
+		  var open = id+"open"+days[today];
+		  var name = id+"name";
+		  var close = id+"close"+days[today];
+		  var address = id+"address";
+		  var phoneNumber = id+"phoneNumber";
+		  var website = id+"website";
+		  
+		  if (toFill[v].hasOwnProperty(open)&&toFill[v].hasOwnProperty(close)){
+			  timeText = theTimeSlingingSlasher(toFill[v][open],toFill[v][close]);
+			  constructFromBackend(id,toFill[v][name],toFill[v][address],toFill[v][phoneNumber],toFill[v][website],timeText);
+		  }else{
+			  alert("does not contain "+name+"'s hours in the database "+open);
+		  }
+		  totalVendors+=1;
+	  }
+	  for (var v = 0; v < numLocalVendorsLookup;v++){
+		service.getDetails({placeId: localVendorsIDLookup[v]},detailsCallback );
+		totalVendors+=1;
+	  }
+	}//END OF INITMAP
 
-/* DETECTS IF COOKIES WERE SETS
-   DEFAULT TIMEZONE IS TIMEZONE OF STORE */
-if(cookies())
-	echo"<u ><span style='color:black;font-size:1em;'><b>Location: </b></span><span style='color:green;font-size:0.75em;line-height:1em;'>".$time_zone_name." </span>";
-else	
-	echo"<p style='color:orange;font-size:1em;text-align:center;'>(Cookies are not enabled in this browser)</p>
-	     <span style='color:black;font-size:1em;'><u>Default Timezone: </span><span style='color:green;font-size:0.75em;line-height:1em;'>".$time_zone_name." </span>";
-echo"<span style='color:black;font-size:1em;'><b>Time: </b></span><span style='color:green;font-size:0.75em;line-height:1em;'>".$today." ".$hour12.":".$minute." ".$dayTime."</span></u>
-    <li id='hours'>
-    <div style='width:100%'>
-    <table width='100%' border='1'><tbody>
-    <tr><th scope='col'>Store</th><th scope='col'>Open?</th>";
-    //gets the vendor information for the rows of rhte table
-    $query = "SELECT * FROM Vendors WHERE Town = '$town' AND State ='$state'";
-    $townVendors = mysql_query($query);
-    $numStores = mysql_numrows($townVendors);
-	
-    for($i = 0; $i < 7; ++$i) {
-	    echo"<th scope='col'>".$days[$i]."</th>";
-    }
-    echo"</tr>";
-	for ($stores = 0; $stores < $numStores; ++$stores) {
-		
-		$storeName = mysql_result($townVendors,$stores,"Name");//gets the name of each store from townvendors
-		echo"<tr><th scope='col'>".$storeName."</th><td>";
-		isOpen($stores);    
-		echo"</td>";
-		for($i = 0; $i < 7; ++$i) {
-			echo"<td>";
-			//STORE OPENING CLOCKS
-			$H24Open = mysql_result($townVendors,$stores,"H24Open".$days[$i]);
-			$H12Open = (!($H24Open%12))?12:$H24Open%12;
-			$MOpen=mysql_result($townVendors,$stores,"MOpen".$days[$i]);
-			//STORE CLOSING CLOCKS
-			$H24Close = mysql_result($townVendors,$stores,"H24Close".$days[$i]);
-			$H12Close = (!($H24Close%12))?12:$H24Close%12;
-			$MClose=mysql_result($townVendors,$stores,"MClose".$days[$i]);
-			//OPENING OR CLOSING IN AM OR PM
-			$OdayTime = ($H24Open >= 12 ? "pm" : "am" );
-			$CdayTime = ($H24Close >= 12 ? "pm" : "am" );
-			//OPENING TIME
-			if($MOpen == 0){
-				if($H24Open == 0){
-					echo "mid<br>";
-				}elseif ($H24Open == 12){
-					echo "noon<br>";
-				}else{
-					echo $H12Open." ".$OdayTime."<br>";
-				}
-			}else
-				echo $H12Open.":".$MOpen." ".$OdayTime."<br>";
-			//CLOSING TIME
-			if($MClose == 0){
-				if($H24Close == 0){
-					echo "mid";
-				}elseif ($H24Close == 12){
-					echo "noon";
-				}
-				else{
-					echo $H12Close." ".$CdayTime;
-				}
-			}else
-				echo $H12Close.":".$MClose." ".$CdayTime;
-			echo"</td>";
+function detailsCallback(place, status) {
+		if (status === google.maps.places.PlacesServiceStatus.OK) {
+			var opening = new Date();
+			var closing = new Date();
+			var today = opening.getDay();
+			var wrapper = document.getElementById('wrapper');
+			var open  = "empty";
+			open = place.opening_hours.open_now ? "<img src='photos/open2.png' style='width:60%;margin-top:0;margin-bottom:0;padding:0;margin-left:auto;margin-right:auto;height:auto%;'/>" : "Closed";
+			var formattedTime = place.opening_hours.weekday_text[today];
+			timeText = 'HOURS TODAY: ' + formattedTime.substring(formattedTime.indexOf(":")+2,formattedTime.length)
+			constructFromGoogle(place,open,timeText);		
+		}else{
+			alert("Error with business Lookup");
 		}
 	}
-	echo"</tr>
-	</tbody>
-	</table>
-	</div>
-	</li>";
-				
-				/* <h3>How much does a 30 cost in Carlisle, PA?</h3>
-				<table>
-					<tr>
-						<td>Beer</td>
-						<td>Beverage Express</td>
-						<td>Stan's Beverages</td>
-						<td>Blosser's Brew-Thru</td>
-						<td>Beer &amp Cigar</td>
-					</tr>
-					<tr>
-						<td>Natty</td>
-						<td>14.99</td>
-						<td>N/A</td>
-						<td>N/A</td>
-						<td>N/A</td>
-					</tr>
-					<tr>
-						<td>Bud Light</td>
-						<td>23.99</td>
-						<td>20.75</td>
-						<td>N/A</td>
-						<td>N/A</td>
-					</tr>
-					<tr>
-						<td>Budweiser</td>
-						<td>23.99</td>
-						<td>20.75</td>
-						<td>N/A</td>
-						<td>N/A</td>
-					</tr>
-					<tr>
-						<td>Miller Light</td>
-						<td>23.99</td>
-						<td>20.75</td>
-						<td>N/A</td>
-						<td>N/A</td>
-					</tr>
-					<tr>
-						<td>Coor's Light</td>
-						<td>23.99</td>
-						<td>20.75</td>
-						<td>N/A</td>
-						<td>N/A</td>
-					</tr>
-					<tr>
-						<td>Busch Light</td>
-						<td>18.49</td>
-						<td>17.46</td>
-						<td>N/A</td>
-						<td>N/A</td>
-					</tr>
-					<tr>
-						<td>PBR</td>
-						<td>19.34</td>
-						<td>N/A</td>
-						<td>N/A</td>
-						<td>N/A</td>
-					</tr>
-					<tr>
-						<td>Lion's Head (24)</td>
-						<td>11.79</td>
-						<td>N/A</td>
-						<td>N/A</td>
-						<td>N/A</td>
-					</tr>
-				</table>
-				<p>* prices last updated 12/22/2015</p>
-				<h3> Let us know what you paid! </h3>
-				<p> Beer buddy is a community that relies on people like you to share how much you paid for a case of brew.
-				Let us know how much you paid for a case at specific vendor, and we will publish it on our website.<p>
-				<p> Email the location, price, and type of beer to:</p>
-				<p> beerpriceindex@gmail.com </p> "*/		
- 
+	  
+function theTimeSlingingSlasher(open,close){
+	var opening = new Date();
+	var closing = new Date();
+	//OPENING STUFF
+	var openHours = open.substring(0,2);
+	var openMin = open.substring(2);
+	opening.setHours(openHours,openMin,0); 
+	var openTimeText = (openHours % 12 == 0)?12:openHours%12;
+	openTimeText += ":";
+	openTimeText += (openMin <10)?openMin: openMin;
+	openTimeText += (openHours < 12)?" am":" pm";
+	//CLOSING STUFF
+	var closeHours = close.substring(0,2);
+	var closeMin = close.substring(2);
+	closing.setHours(closeHours,closeMin,0);
+	var closeTimeText = (closeHours % 12 == 0)?12:closeHours%12;
+	closeTimeText += ":";
+	closeTimeText += (closeMin <10)?closeMin: closeMin;
+	closeTimeText += (closeHours < 12)?" am":" pm";
+	//FINAL TIME STRING
+	return 'HOURS TODAY: ' +openTimeText + ' - ' + closeTimeText;
+}
+
+
+function constructFromBackend(id,name,address,phoneNumber,website,timeText){
+	var contentString = '<a href="storeSummary2.php?ID='+id+'" style="color:black;background-color:lightblue;text-decoration:none;display:inline-block;width:100%;">'+
+		              '<div style="margin:none;padding:none;width:100%;height:100%;"><h3 style="text-align:center;">'+name+'</h3>'+
+			        '<h4 style="text-align:center;width:100%;">'+timeText+'</h4><center style="font-size:0.8em;">*click here for more info*</center>'+
+			      '</div></a>'+
+		       '<table style="margin:0;padding:0;padding-top:0px;width:100%;background-color:white;text-align:center;">'+
+			 '<tr ><td><span style="text-align:center" id="timeText">'+timeText+'</span></td></tr>'+
+			 '<tr ><td> <span style="text-align:center">CALL: <a href="tel:'+phoneNumber+'">'+phoneNumber+'</a></span></td></tr>'+
+			 '<tr ><td><span style="text-align:center">Visit their <a href="'+website+'" style="color:blue;" target="_blank">Website</a></span></td></tr>'+
+			 '<tr ><td><span style="text-align:center">'+address+'</span></td></tr>'+
+			 '</table>'+
+			'';
+			//alert(numVendors);
+		      var newElement = document.createElement('li');
+			//newElement.id = place.place_id;
+			newElement.id = id;
+			newElement.className = "distributor";
+
+			newElement.innerHTML = contentString;
+
+			wrapper.appendChild(newElement);
+			//var elementExists = document.getElementById("find-me");
+			//wrapper.insertBefore(newElement,document.getElemenById("distributor"));
+			wrapper.style.height = "100%";
+			//sortStore(wrapper);
+}
+
+	  
+function constructFromGoogle(place,open,timeText){
+	var contentString = '<a href="storeSummary2.php?place_id='+place.place_id+'" style="color:black;background-color:lightblue;text-decoration:none;display:inline-block;width:100%;">'+
+		              '<div style="margin:none;padding:none;width:100%;height:100%;"><h3 style="text-align:center;">'+place.name+'</h3>'+
+			        '<h4 style="text-align:center;width:100%;">'+open+'</h4><center style="font-size:0.8em;">*click here for more info*</center>'+
+			      '</div></a>'+
+		       '<table style="margin:0;padding:0;padding-top:0px;width:100%;background-color:white;text-align:center;">'+
+			 '<tr ><td><span style="text-align:center" id="timeText">'+timeText+'</span></td></tr>'+
+			 '<tr ><td> <span style="text-align:center">CALL: <a href="tel:'+place.international_phone_number+'">'+place.formatted_phone_number+'</a></span></td></tr>'+
+			 '<tr ><td><span style="text-align:center">Visit their <a href="'+place.website+'" style="color:blue;" target="_blank">Website</a></span></td></tr>'+
+			 '<tr ><td><span style="text-align:center">'+place.vicinity+'</span></td></tr>'+
+			 '</table>';
+			//alert(numVendors);
+		      var newElement = document.createElement('li');
+			//newElement.id = place.place_id;
+			newElement.id = place.place_id;
+			newElement.className = "distributor";
+
+			newElement.innerHTML = contentString;
+
+			wrapper.appendChild(newElement);
+			//var elementExists = document.getElementById("find-me");
+			//wrapper.insertBefore(newElement,document.getElemenById("distributor"));
+			wrapper.style.height = "100%";
+			//sortStore(wrapper);
+}
+
+function sortStore(ul){
+	//alert("sorting");
+	var lis = ul.getElementsByClassName("distributor");
+	var ali = Array.prototype.slice.call(lis);
+	ali.sort(liSort);
+	for (var i = 0; i < ali.length; i++) {
+	    ul.appendChild(ali[i]);
+	}
+}
+
+function liSort(one, two) {
+    return one.id < two.id ? -1 : ( one.id > two.id ? 1 : 0 );
+}
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmv08kSZpkCuBwQEUsqqnxJ7m_ZBro_OQ&signed_in=true&libraries=places&callback=initMap" async defer></script>
+	<?php
 	echo"</article>								
-	</main>";db_close1(); 
+	</main>";
+	db_close1(); 
 	include 'footer.php';
 	//CLOSES DATABASE CONNECTION AT END
 ?>
