@@ -171,17 +171,11 @@ body {
 		width:100%;
 		}
 		
-		
 		#map {
-		height: 24em;
+        height: 350px;
 		width: 80%;
 		}
 		
-		#indexMap {
-		height: 24em;
-		width: 100%;
-		}
-
 		.distributor{			
 		width:47%;
 		margin:1%;
