@@ -152,7 +152,7 @@ echo"	<main id='center' class='column'>
 <div style='background-color:silver;width:98%;margin-right:1%;margin-left:1%;padding-bottom:1em;'><div>";
 
 
-		$catQuery = "SELECT Category FROM Products GROUP BY Category";
+		$catQuery = "SELECT Category FROM products GROUP BY Category";
 		$categories = (!is_null($catQuery))?mysql_query($catQuery):null;
 		$numCategories = (!is_null($categories))?mysql_numrows($categories):null; 
 		
@@ -201,7 +201,7 @@ echo"</div><center>
 		$pQuery = "SELECT timestamp,price FROM $town 
 		WHERE vendorID = $id 
 		AND productID = $pro ORDER BY timestamp DESC LIMIT 1";
-		$nameQuery = "SELECT Name,volume,quantity,cans FROM Products WHERE ID = $pro";
+		$nameQuery = "SELECT Name,volume,quantity,cans FROM products WHERE ID = $pro";
 		$proQuery = mysql_query($pQuery);
 		$proNameQuery = mysql_query($nameQuery);
 		$productName= mysql_result($proNameQuery,0,"Name");

@@ -42,15 +42,15 @@ if ($_SESSION['user_id']){
 		$vendors = mysql_query($query);
 		$numVendors = mysql_numrows($vendors);
 		
-		$query = "SELECT Name FROM Products";
+		$query = "SELECT Name FROM products";
 		$products = mysql_query($query);
 		$numProducts = mysql_numrows($products);
 		
-		$query = "SELECT Quantity FROM Products GROUP BY Quantity";
+		$query = "SELECT Quantity FROM products GROUP BY Quantity";
 		$quantity = mysql_query($query);
 		$numQuantity = mysql_numrows($quantity); 
 		
-		$query = "SELECT Volume FROM Products GROUP BY Volume";
+		$query = "SELECT Volume FROM products GROUP BY Volume";
 		$volume = mysql_query($query);
 		$numVolume = mysql_numrows($volume);
 		
