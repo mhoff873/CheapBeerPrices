@@ -37,7 +37,7 @@ echo"<main id='center' class='column'>
 	   //graphable vendors
     	   $query = "SELECT ID,place_id,Name,
 	   latitude,longitude 
-	   FROM Vendors
+	   FROM vendors
 	   WHERE latitude <> 0
 	   AND longitude <> 0";
 	   
@@ -55,7 +55,7 @@ echo"<main id='center' class='column'>
 	    die('Could not query:' . mysql_error());
 	} */
 	    $query = "SELECT ID,place_id
-	   FROM Vendors 
+	   FROM vendors 
 	   WHERE patchHours = 0
 	   AND latitude <> 0
 	   AND longitude <> 0";

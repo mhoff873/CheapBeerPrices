@@ -69,7 +69,7 @@
 
 	<div id="footer-wrapper">
 		<footer id="footer">
-		<a href="login.php">Login</a> <a href = "Logout.php">Logout</a>
+		<a href="login.php.html">Login</a> <a href = "Logout.php">Logout</a>
 		<p> cheapbeerprices.com - Copyright &copy;  <?php echo date("Y"); ?></p>
 		</footer>
 	</div>

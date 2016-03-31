@@ -21,8 +21,8 @@
 	db_connect(); //CONNECT TO DATABASE RIGHT AWAY
 	echo"<nav id='left' class='column'>
 			<u><h3 style='text-align:center'> Locations</h3></u>";
-			//$towns = "SELECT Town FROM Vendors GROUP BY Town";
-			$states = "SELECT State FROM Vendors GROUP BY State";
+			//$towns = "SELECT Town FROM vendors GROUP BY Town";
+			$states = "SELECT State FROM vendors GROUP BY State";
 			//$resultTowns = mysql_query($towns);
 			$resultStates = mysql_query($states);
 			//$numOfRowsTowns = mysql_numrows($resultTowns);
@@ -30,7 +30,7 @@
 			echo"<ul>";
 			for ($s=0;$s<$numOfRowsStates;$s++)
 			{	$state = mysql_result($resultStates,$s,"State");
-				$stateLocQuery = "SELECT Location FROM Vendors WHERE State='$state' GROUP BY Location";
+				$stateLocQuery = "SELECT Location FROM vendors WHERE State='$state' GROUP BY Location";
 				$stateLocations =  mysql_query($stateLocQuery);
 				$numOfStateLoc = mysql_numrows($stateLocations);
 				echo"<li style='width:100%;background-color:white;padding-top:0.5em;padding-bottom:0.5em;padding-left:0.25em;'> 

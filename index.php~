@@ -162,12 +162,20 @@ function initMap() {
 	  center: new google.maps.LatLng(40, -75), //should be set to client's closest location
 	  mapTypeId: google.maps.MapTypeId.ROADMAP
 	});
+	
+	var showPosition = function (position) 
+           {
+            indexMap.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude), 10);
+		}
+	             navigator.geolocation.getCurrentPosition(showPosition);  
+	
 	var marker, i;
 	for (i = 0; i < numFill; i++) { 
 		var marker = new google.maps.Marker({
 			position: new google.maps.LatLng(toFill[i]['latitude'], toFill[i]['longitude']),
 			map: indexMap });
 			
+		
 		/* var showPosition = function(position)
 		{
 			indexMap.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude),10);

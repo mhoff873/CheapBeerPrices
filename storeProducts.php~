@@ -33,7 +33,7 @@
 	//only 1 condition is needed to decide which vendor to pull from for pulling
 	$getData=(isset($_GET['ID'])&&!isset($_GET['place_id']))?
 	"SELECT Name,ID,Location,State
-	FROM vendors
+	FROM Vendors
 	WHERE ID = ".$id:null; 
 	
 	$fill = (!is_null($getData))?mysql_query($getData):null;
@@ -42,7 +42,7 @@
 	} */
 	$callGoogle=(isset($_GET['place_id'])&&!isset($_GET['ID']))?
 	"SELECT Name,ID,Location,State 
-	FROM vendors 
+	FROM Vendors 
 	WHERE place_id = '".$place_id."'":null;
 /* 	if (!$fill) {
 	    die('Could not query:' . mysql_error());

@@ -32,7 +32,7 @@
 	address,phoneNumber,website,latitude,longitude,Location,State,County,
 	openSun,closeSun,openMon,closeMon,openTue,closeTue,
 	openWed,closeWed,openThu,closeThu,openFri,closeFri,openSat,closeSat
-	FROM vendors
+	FROM Vendors
 	WHERE ID = ".$id."
 	AND patchHours = 1":null; 
 	
@@ -42,7 +42,7 @@
 	//}
 	$callGoogle=(!is_null($place_id))?
 	"SELECT ID,place_id,Name,Location,State
-	FROM vendors 
+	FROM Vendors 
 	WHERE place_id = '".$place_id."'
 	AND patchHours = 0":null;
 	
