@@ -80,7 +80,7 @@ function initMap() {
 	var infowindow = new google.maps.InfoWindow;
 	indexMap = new google.maps.Map(document.getElementById('indexMap'), {
 	  zoom: 11,
-	  center: new google.maps.LatLng(40, -75), //should be set to client's closest location
+	  center: new google.maps.LatLng(40.387057, -75.868149), //should be set to client's closest location
 	  mapTypeId: google.maps.MapTypeId.ROADMAP
 	});
 	
