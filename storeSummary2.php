@@ -68,14 +68,14 @@
 	
 /* 	<ul style='width:100%;list-style-type: none;margin: 0;padding: 0;'>
 	<li class='tabLeft' style='border-bottom:none;background-color:silver;border-right:none;'><h3>Store Summary</h3></li>
-	<a href=storeproducts.php?";
+	<a href=storeProducts.php?";
 	
 	if(isset($_GET['ID'])){
 		echo"ID=".$_GET['ID'];
 	}
 	//ELSE:
 
-	echo"><li class='tabRight' style='background-color:#707070;color:white;height:2.38em;border-bottom:none;border-left:none;'><h3>Store products</h3></li></a>
+	echo"><li class='tabRight' style='background-color:#707070;color:white;height:2.38em;border-bottom:none;border-left:none;'><h3>Store Products</h3></li></a>
 	</ul>
 	<br>"; */
 	
@@ -91,13 +91,13 @@
 			</td>
 			
 			<td class='tabRight' style='background-color:silver;'>
-			<a href=storeproducts.php?";
+			<a href=storeProducts.php?";
 				//setting the link to correct vendor's summary page
 				if(isset($_GET['ID'])){
 					echo"ID=".$_GET['ID'];
 				} 
 				echo" style='width: 50%;height: 100%;'>
-				<h3>Store products</h3></a>
+				<h3>Store Products</h3></a>
 			</td>
 		</tr>
 	</table>
