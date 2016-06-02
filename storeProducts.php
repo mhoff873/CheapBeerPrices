@@ -9,8 +9,8 @@
 		$db_user= 'root';
 		$db_pass= 'Beer1234';
 		//$db_pass='';
-		//$db_name= 'CheapBeer';
-		$db_name= 'cheapbeerprices';
+		$db_name= 'CheapBeer';
+		//$db_name= 'cheapbeerprices';
 		global $connection;
 		$connection = mysql_connect($db_host,$db_user,$db_pass) 
 			or die ("cannot connect to $db_host as $db_user".mysql_error());
