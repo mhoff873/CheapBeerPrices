@@ -61,7 +61,7 @@
 			</td>
 			
 			<td class='tabRight' style='background-color:#707070;'>
-				<h1 style='color:white'>Store products</h1>
+				<h1 style='color:white'>Store Products</h1>
 			</td>
 		</tr>
 	</table>

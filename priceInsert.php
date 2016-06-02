@@ -206,13 +206,13 @@ if ($_SESSION['user_id']){
 										$productID = mysql_result($productQuery,0,"ID");
 										$createTable="CREATE TABLE IF NOT EXISTS `".$location."` (
 										        `priceID` int(11) NOT NULL, 
-											`VendorID` int(11) NOT NULL,
-											`ProductID` int(11) NOT NULL,
-											`Price` double NOT NULL,
+											`vendorID` int(11) NOT NULL,
+											`productID` int(11) NOT NULL,
+											`price` double NOT NULL,
 											`timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 											) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_ci;";
 											
-										$insertPrice=" INSERT INTO `".$location."` (`VendorID`, `ProductID`, `Price`, `timestamp`) VALUES
+										$insertPrice=" INSERT INTO `".$location."` (`vendorID`, `productID`, `price`, `timestamp`) VALUES
 										($vendorID, $productID,".$_GET['price'].",NULL)";
 										
 										echo"<br>";
