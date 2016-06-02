@@ -55,8 +55,8 @@ else
     $mysql_password = 'Beer1234';
 
     /*** database name ***/
-    $mysql_dbname = 'cheapbeerprices';
-
+    //$mysql_dbname = 'cheapbeerprices';
+    $db_name= 'CheapBeer';
     try
     {
         $dbh = new PDO("mysql:host=$mysql_hostname;dbname=$mysql_dbname", $mysql_username, $mysql_password);
