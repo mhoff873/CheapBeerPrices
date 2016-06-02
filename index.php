@@ -98,7 +98,7 @@ function initMap() {
 			indexMap.setCenter(new google.maps.LatLng(toFill[i]['latitude'], toFill[i]['longitude']));
 			var contentString = '<div id="content">'+
 			'<h1 id="firstHeading" class="firstHeading">'+toFill[i]['name']+'</h1>'+
-			'<a href="storeproducts.php?ID='+idToFill[i]+''+'"><input type="button" value="Prices"></a>'+
+			'<a href="storeProducts.php?ID='+idToFill[i]+''+'"><input type="button" value="Prices"></a>'+
 			'<a href="storeSummary2.php?ID='+idToFill[i]+''+'"><input type="button" value="Store Summary"></a>'+
 			'</div>';
 			infowindow.setContent(contentString);
