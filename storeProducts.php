@@ -262,8 +262,8 @@ $productCounter = 0; //counts number of search results or just price results for
 				WHERE vendorID = $id 
 				AND productID = $pro ORDER BY timestamp DESC LIMIT 1"; //lifts the newest timestamp only
 				$nameQuery = (isset($_GET['search']) && $_GET['search']!="")?
-				"SELECT Name,Volume,Quantity,Cans,ABV,Style FROM products WHERE ID = $pro AND Name LIKE '%$_GET[search]%' ORDER BY Name"
-				:"SELECT Name,Volume,Quantity,Cans,ABV,Style FROM products WHERE ID = $pro ORDER BY Name";
+				"SELECT Name,Volume,Quantity,Cans,ABV,Style FROM products WHERE ID = $pro AND Name LIKE '%$_GET[search]%' ORDER BY Name ASC"
+				:"SELECT Name,Volume,Quantity,Cans,ABV,Style FROM products WHERE ID = $pro ORDER BY Name ASC";
 			
 			
 				$proNameQuery = mysql_query($nameQuery);
