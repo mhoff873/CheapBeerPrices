@@ -29,7 +29,7 @@
 	//only 1 condition is needed to decide which vendor to pull from for pulling
 	$getData=(isset($_GET['ID']))?
 	"SELECT Name,ID,Location,State
-	FROM Vendors
+	FROM vendors
 	WHERE ID = ".$id:null; 
 	
 	$fill = (!is_null($getData))?mysql_query($getData):null;

@@ -78,18 +78,18 @@ echo"<main id='center' class='column'>
 	   openFri,closeFri,
 	   openSat,closeSat,
 	   Name,patchHours 
-	   FROM Vendors 
+	   FROM vendors 
 	   WHERE Location = '".$_GET['loc']."' 
 	   AND patchHours = 1";
-	   $locationVendorsToFill = mysql_query($query);
-	   $numLocationVendorsToFill = mysql_numrows($locationVendorsToFill);
+	   $locationvendorsToFill = mysql_query($query);
+	   $numLocationvendorsToFill = mysql_numrows($locationvendorsToFill);
 	   
 /* 	   $query = "SELECT ID,place_id
-	   FROM Vendors 
+	   FROM vendors 
 	   WHERE Location = '".$_GET['loc']."' 
 	   AND patchHours = 0";
-	   $locationVendorsLookup = mysql_query($query);
-	   $numLocationVendorsLookup = mysql_numrows($locationVendorsLookup); */
+	   $locationvendorsLookup = mysql_query($query);
+	   $numLocationvendorsLookup = mysql_numrows($locationvendorsLookup); */
 	   //ARRAYS TO JSON ENCODE
 	  // $vendorPlaceID=array(); //Google place_id
 	   $toFill=array();        //Local database columns
@@ -97,41 +97,41 @@ echo"<main id='center' class='column'>
 	   //$idToLookup=array();	//array to hold id's of places to lookup
 	   
 	   
-	  /*  for($v=0;$v<$numLocationVendorsLookup;++$v){
-		   $id = mysql_result($locationVendorsLookup,$v,"ID");
-		   array_push($vendorPlaceID,mysql_result($locationVendorsLookup,$v,"place_id"));
+	  /*  for($v=0;$v<$numLocationvendorsLookup;++$v){
+		   $id = mysql_result($locationvendorsLookup,$v,"ID");
+		   array_push($vendorPlaceID,mysql_result($locationvendorsLookup,$v,"place_id"));
 		   array_push($idToLookup,$id); //holds all ids for google lookup
 	   } */
-	   for($v=0;$v<$numLocationVendorsToFill;++$v){
+	   for($v=0;$v<$numLocationvendorsToFill;++$v){
 		   //this page does not need store hours for everyday. just "today"
-		   $id = mysql_result($locationVendorsToFill,$v,"ID");
+		   $id = mysql_result($locationvendorsToFill,$v,"ID");
 		   array_push($idToFill,$id); //holds all ids for local fill
 		   array_push($toFill,array(  ///all information
-			$id."name" => mysql_result($locationVendorsToFill,$v,"Name"),
-			$id."location"=> mysql_result($locationVendorsToFill,$v,"Location"),
-			$id."state"=>mysql_result($locationVendorsToFill,$v,"State"),
-			$id."phoneNumber"=>mysql_result($locationVendorsToFill,$v,"phoneNumber"),
-			$id."website"=>mysql_result($locationVendorsToFill,$v,"website"),
-			$id."latitude"=>mysql_result($locationVendorsToFill,$v,"latitude"),
-			$id."longitude"=>mysql_result($locationVendorsToFill,$v,"longitude"),
-			$id."county"=>mysql_result($locationVendorsToFill,$v,"County"),
-			$id."address" => mysql_result($locationVendorsToFill,$v,"address"),
-			$id."phoneNumber" => mysql_result($locationVendorsToFill,$v,"phoneNumber"),
-			$id."website" => mysql_result($locationVendorsToFill,$v,"website"),
-			$id."openMon" => mysql_result($locationVendorsToFill,$v,"openMon"),
-			$id."closeMon" => mysql_result($locationVendorsToFill,$v,"closeMon"),
-			$id."openTue" => mysql_result($locationVendorsToFill,$v,"openTue"),
-			$id."closeTue" => mysql_result($locationVendorsToFill,$v,"closeTue"),
-			$id."openWed" => mysql_result($locationVendorsToFill,$v,"openWed"),
-			$id."closeWed" => mysql_result($locationVendorsToFill,$v,"closeWed"),
-			$id."openThu" => mysql_result($locationVendorsToFill,$v,"openThu"),
-			$id."closeThu" => mysql_result($locationVendorsToFill,$v,"closeThu"),
-			$id."openFri" => mysql_result($locationVendorsToFill,$v,"openFri"),
-			$id."closeFri" => mysql_result($locationVendorsToFill,$v,"closeFri"),
-			$id."openSat" => mysql_result($locationVendorsToFill,$v,"openSat"),
-			$id."closeSat" => mysql_result($locationVendorsToFill,$v,"closeSat"),
-			$id."openSun" => mysql_result($locationVendorsToFill,$v,"openSun"),
-			$id."closeSun" => mysql_result($locationVendorsToFill,$v,"closeSun")));
+			$id."name" => mysql_result($locationvendorsToFill,$v,"Name"),
+			$id."location"=> mysql_result($locationvendorsToFill,$v,"Location"),
+			$id."state"=>mysql_result($locationvendorsToFill,$v,"State"),
+			$id."phoneNumber"=>mysql_result($locationvendorsToFill,$v,"phoneNumber"),
+			$id."website"=>mysql_result($locationvendorsToFill,$v,"website"),
+			$id."latitude"=>mysql_result($locationvendorsToFill,$v,"latitude"),
+			$id."longitude"=>mysql_result($locationvendorsToFill,$v,"longitude"),
+			$id."county"=>mysql_result($locationvendorsToFill,$v,"County"),
+			$id."address" => mysql_result($locationvendorsToFill,$v,"address"),
+			$id."phoneNumber" => mysql_result($locationvendorsToFill,$v,"phoneNumber"),
+			$id."website" => mysql_result($locationvendorsToFill,$v,"website"),
+			$id."openMon" => mysql_result($locationvendorsToFill,$v,"openMon"),
+			$id."closeMon" => mysql_result($locationvendorsToFill,$v,"closeMon"),
+			$id."openTue" => mysql_result($locationvendorsToFill,$v,"openTue"),
+			$id."closeTue" => mysql_result($locationvendorsToFill,$v,"closeTue"),
+			$id."openWed" => mysql_result($locationvendorsToFill,$v,"openWed"),
+			$id."closeWed" => mysql_result($locationvendorsToFill,$v,"closeWed"),
+			$id."openThu" => mysql_result($locationvendorsToFill,$v,"openThu"),
+			$id."closeThu" => mysql_result($locationvendorsToFill,$v,"closeThu"),
+			$id."openFri" => mysql_result($locationvendorsToFill,$v,"openFri"),
+			$id."closeFri" => mysql_result($locationvendorsToFill,$v,"closeFri"),
+			$id."openSat" => mysql_result($locationvendorsToFill,$v,"openSat"),
+			$id."closeSat" => mysql_result($locationvendorsToFill,$v,"closeSat"),
+			$id."openSun" => mysql_result($locationvendorsToFill,$v,"openSun"),
+			$id."closeSun" => mysql_result($locationvendorsToFill,$v,"closeSun")));
 	   }
 	   
 	   
@@ -144,7 +144,7 @@ echo"<main id='center' class='column'>
 ?>
 <script type="text/javascript">
 	//regular javascript globals
-	totalVendors = 0;
+	totalvendors = 0;
 	timeText = "";
 	days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];		  
 	<?php
@@ -152,20 +152,20 @@ echo"<main id='center' class='column'>
 		if($toFill){
 			echo "var idToFill  = ".json_encode($idToFill, JSON_PRETTY_PRINT) . ";\n";
 			echo "var toFill = ". json_encode($toFill, JSON_PRETTY_PRINT) . ";\n";
-			echo "var numLocalVendorsToFill = ". json_encode($numLocationVendorsToFill) . ";\n";
-		}else{echo"var numLocalVendorsToFill = 0;";}
+			echo "var numLocalvendorsToFill = ". json_encode($numLocationvendorsToFill) . ";\n";
+		}else{echo"var numLocalvendorsToFill = 0;";}
 		/* if($vendorPlaceID){
 			echo "var idToLookup  = ".json_encode($idToLookup, JSON_PRETTY_PRINT) . ";\n";
-			echo "var localVendorsIDLookup = ". json_encode($vendorPlaceID) . ";\n";
-			echo "var numLocalVendorsLookup = ". json_encode($numLocationVendorsLookup) . ";\n";
-		}else{echo"var numLocalVendorsLookup = 0;";} */
+			echo "var localvendorsIDLookup = ". json_encode($vendorPlaceID) . ";\n";
+			echo "var numLocalvendorsLookup = ". json_encode($numLocationvendorsLookup) . ";\n";
+		}else{echo"var numLocalvendorsLookup = 0;";} */
 ?>
 function initMap() {
 	  //var map = new google.maps.Map(document.createElement('div'));
 	  //var infowindow = new google.maps.InfoWindow();
 	  //var service = new google.maps.places.PlacesService(map);
 	  
-	  for (var v = 0; v < numLocalVendorsToFill;v++){
+	  for (var v = 0; v < numLocalvendorsToFill;v++){
 		  var id = idToFill[v];
 		  var opening = new Date();
 		  var today = opening.getDay();
@@ -182,11 +182,11 @@ function initMap() {
 		  }else{
 			  alert("does not contain "+name+"'s hours in the database "+open);
 		  }
-		  totalVendors+=1;
+		  totalvendors+=1;
 	  }
-/* 	  for (var v = 0; v < numLocalVendorsLookup;v++){
-		service.getDetails({placeId: localVendorsIDLookup[v]},detailsCallback );
-		totalVendors+=1;
+/* 	  for (var v = 0; v < numLocalvendorsLookup;v++){
+		service.getDetails({placeId: localvendorsIDLookup[v]},detailsCallback );
+		totalvendors+=1;
 	  } */
 	}//END OF INITMAP
 
@@ -242,7 +242,7 @@ function constructFromBackend(id,name,address,phoneNumber,website,timeText){
 			 '<tr ><td><span style="text-align:center">'+address+'</span></td></tr>'+
 			 '</table>'+
 			'';
-			//alert(numVendors);
+			//alert(numvendors);
 		      var newElement = document.createElement('li');
 			//newElement.id = place.place_id;
 			newElement.id = id;
@@ -269,7 +269,7 @@ function constructFromBackend(id,name,address,phoneNumber,website,timeText){
 			 '<tr ><td><span style="text-align:center">Visit their <a href="'+place.website+'" style="color:blue;" target="_blank">Website</a></span></td></tr>'+
 			 '<tr ><td><span style="text-align:center">'+place.vicinity+'</span></td></tr>'+
 			 '</table>';
-			//alert(numVendors);
+			//alert(numvendors);
 		      var newElement = document.createElement('li');
 			//newElement.id = place.place_id;
 			newElement.id = place.place_id;

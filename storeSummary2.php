@@ -27,7 +27,7 @@
 	address,phoneNumber,website,latitude,longitude,Location,State,County,
 	openSun,closeSun,openMon,closeMon,openTue,closeTue,
 	openWed,closeWed,openThu,closeThu,openFri,closeFri,openSat,closeSat
-	FROM Vendors
+	FROM vendors
 	WHERE ID = ".$id."
 	AND patchHours = 1":null; 
 	

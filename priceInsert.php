@@ -40,7 +40,7 @@ if ($_SESSION['user_id']){
 		//form to find vendor	
 		echo"<form action='priceInsert.php' name='vendorSelectForm' method='get'>";
 		
-		$query = "SELECT State FROM Vendors GROUP BY State";
+		$query = "SELECT State FROM vendors GROUP BY State";
 		$state = mysql_query($query);
 		$numStates = mysql_numrows($state);
 		
@@ -55,7 +55,7 @@ if ($_SESSION['user_id']){
 					echo'<option value="'.$stateVal.'">'.$stateVal.'</option>';
 			}echo"</select>";
 			//if the state has been selected then the next queries can continue
-			$query = "SELECT County FROM Vendors WHERE State = '".$_GET['vendorState']."' GROUP BY County";
+			$query = "SELECT County FROM vendors WHERE State = '".$_GET['vendorState']."' GROUP BY County";
 			$county = mysql_query($query);
 			$numCounties = mysql_numrows($county);
 				if(isset($_GET['vendorCounty']) && $_GET['vendorCounty']!="Choose one"){ //state has been previously set
@@ -66,7 +66,7 @@ if ($_SESSION['user_id']){
 						if($countyVal!=$_GET['vendorCounty']) //does not print the selected county twice
 							echo'<option value="'.$countyVal.'">'.$countyVal.'</option>';
 					}echo"</select>";
-					$query = "SELECT Location FROM Vendors WHERE County = '".$_GET['vendorCounty']."' GROUP BY Location";
+					$query = "SELECT Location FROM vendors WHERE County = '".$_GET['vendorCounty']."' GROUP BY Location";
 					$location = mysql_query($query);
 					$numLocations = mysql_numrows($location);
 
@@ -78,7 +78,7 @@ if ($_SESSION['user_id']){
 								if($locationVal!=$_GET['vendorLocation']) //does not print the selected county twice
 									echo'<option value="'.$locationVal.'">'.$locationVal.'</option>';
 							}echo"</select>";
-							$query = "SELECT Name FROM Vendors WHERE Location = '".$_GET['vendorLocation']."' GROUP BY Name";
+							$query = "SELECT Name FROM vendors WHERE Location = '".$_GET['vendorLocation']."' GROUP BY Name";
 							$vendors = mysql_query($query);
 							$numNames = mysql_numrows($vendors);
 
