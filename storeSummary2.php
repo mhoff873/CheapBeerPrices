@@ -125,7 +125,7 @@
 ?>
 
 days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat']; //for retrieving data from database
-dayNames=['Sundat','Monday','Tuesday','Wednesday','Thusday','Friday','Saturday']; //for printing menu
+dayNames=['Sunday','Monday','Tuesday','Wednesday','Thusday','Friday','Saturday']; //for printing menu
 var map;
 var infowindow;
 

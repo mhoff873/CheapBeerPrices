@@ -121,14 +121,14 @@
 		        </td><td style='width:30%'></td>
 		      </tr></table>"; */
 	
-	echo"<table style='width:96%'>";
-		$searchMethod = array("Basic Price Results","ABV Price Comparison");
-		$numSearchMethod = 2; 
+/* 	echo"<table style='width:96%'>";
+		//$searchMethod = array("Basic Price Results","ABV Price Comparison");
+		//$numSearchMethod = 2; 
 		echo"<tr>
 		<td><center><div style='padding-bottom:1em;width:60%;'>";
 		//display method radiobuttons are set to previously GET-requested method
 		//changing them resubits the form with the updated information
-		if(!isset($_GET['searchMethod'])){
+/* 		if(!isset($_GET['searchMethod'])){
 			for($s=0;$s<$numSearchMethod;++$s) { 
 				if($s==0)
 					echo'<input type="radio" onchange="this.form.submit()" name="searchMethod" value="'.$searchMethod[0].'" checked>'.$searchMethod[0].'<br>';
@@ -142,14 +142,14 @@
 				else
 					echo'<input type="radio" onchange="this.form.submit()" name="searchMethod" value="'.$searchMethod[$s].'" >'.$searchMethod[$s].'<br>';
 			}
-		}
+		} 
 	echo"</div></center></td></tr>";	
-echo"</table>
-<center>
+echo"</table>"; */
+echo"<center>
 <table style='background-color:white;width:98%;border-style:solid;border-color:black;border-width:3px'>";
 $productCounter = 0; //counts number of search results or just price results for the town. Allows coloring of rows and "0 results" alert message
 //if the searchMethod has been previously set, build that table of results
-if(!isset($_GET['searchMethod']) || $_GET['searchMethod'] == $searchMethod[0]){ //if the searchMethod is not set, set the table to basic search
+/* /* if(!isset($_GET['searchMethod']) || $_GET['searchMethod'] == $searchMethod[0]){ //if the searchMethod is not set, set the table to basic search
 	echo"<tr style='vertical-align:top;text-align:center;height:1em;margin-right:auto;margin-left:auto;background-color:silver;color'>
 			<th style='width:6em;' onclick='sort_table(priceTable, 0, asc1); asc1 *= -1; asc2 = 1; asc3 = 1; asc4 = 1; asc5 = 1;asc6 = 1;'>Date</th>
 			<th onclick='sort_table(priceTable, 1, asc2); asc2 *= -1; asc3 = 1; asc1 = 1; asc4 = 1; asc5 = 1;asc6 = 1;'>Name</th>
@@ -171,7 +171,7 @@ if(!isset($_GET['searchMethod']) || $_GET['searchMethod'] == $searchMethod[0]){ 
 		* Insert price for that vendor or another vendor in that location
 		*
 		*/
-		$numProducts = (!is_null($prices))?mysql_numrows($prices):0;
+/* 		$numProducts = (!is_null($prices))?mysql_numrows($prices):0;
 		$productArray = array();
 		for($i = 0; $i<=$numProducts-1; $i++)//this array_push only works for numeric arrays
 			array_push($productArray,mysql_result($prices,$i,"productID"));
@@ -221,9 +221,9 @@ if(!isset($_GET['searchMethod']) || $_GET['searchMethod'] == $searchMethod[0]){ 
 				<td>$".$price."</td>
 				</tr>";
 			}
-		}
+		} */
 	//non-default display method
-	}elseif (isset($_GET['searchMethod']) && $_GET['searchMethod'] == 'ABV Price Comparison'){
+	//}elseif (isset($_GET['searchMethod']) && $_GET['searchMethod'] == 'ABV Price Comparison'){ 
 			
 			$query = "SELECT productID FROM `$town` WHERE vendorID = '$id' GROUP BY productID"; //1 for each productID
 
@@ -296,7 +296,7 @@ if(!isset($_GET['searchMethod']) || $_GET['searchMethod'] == $searchMethod[0]){ 
 				}elseif(mysql_num_rows($proNameQuery)==0){
 				}//a price in this town belongs to a product that does not match the search results. no big deal.
 			}
-		}
+		//} end of if statement where abv method is displayed
 		echo"</tbody></table>"; //insert the failed search result method after the price table
 		if(isset($_GET['search'])&&$productCounter==0){//there were no search results returned
 			if($_GET['search']=="")

@@ -19,17 +19,55 @@
 		mysql_close($connection);
 	}
 	db_connect1(); //CONNECT TO DATABASE RIGHT AWAY
-	//LOCATION VARS
+	//LOCATION VARS (only assign if set)
 	$location=$_GET['loc'];
 	$state=$_GET['state'];
 echo"<main id='center' class='column'>
 	<article>
+	
+	
 	<h1 style='text-align:center;'>".$location.", ".$state.".</h1><hr>
-	<h3><center>Beer Distributors</center></h3>
-	<p style='text-align:center'>Click any store for more information</p>
-	<ul id='wrapper' style='padding:0;margin:0;width:100%;height:100%;list-style-type:none;'></ul>";
+	<div style='padding: 0;border: 0;margin: 0;float:none;background-color:#707070;padding-bottom:1.25em;'>
+	<table style='width:100%;margin: 0;padding: 0;'> 
+		<tr>
+			<td style='text-align:center;width:20%;background-color:silver;color:white;border-bottom:none;border-left:none;'>
+				<a href=location.php?";
+				//setting the link to correct vendor's summary page
+				if(isset($_GET['loc'])){
+					if(isset($_GET['state'])){ //only redirects when all required GETs are known
+						echo"loc=".$_GET['loc'];
+						echo"&state=".$_GET['state'];
+						echo"&view=stat";
+					}
+				} 
+				echo" style='width: 100%;height: 100%;'>
+					<h3>Location Statistics</h3></a>
+
+			</td>
+			
+			<td style='text-align:center;width:20%;background-color:#707070;border-bottom:none;border-left:none;'>
+				<h1 style='color:white'>Stores</h1>
+			</td>
+			<td style='text-align:center;width:20%;background-color:silver;color:white;border-bottom:none;border-left:none;'>
+				<a href=location.php?"; //redirect to correct page with correct loc and state variables
+				//setting the link to correct vendor's summary page
+				if(isset($_GET['loc'])){
+					if(isset($_GET['state'])){ //only redirects when all required GETs are known
+						echo"loc=".$_GET['loc'];
+						echo"&state=".$_GET['state'];
+						echo"&view=prices";
+					}
+				} 
+				echo" style='width: 100%;height: 100%;'>
+				<h3>Prices</h3>
+			</td>
+		</tr>
+	</table>
+	<br>
+	<div style='background-color:silver;width:98%;margin-right:1%;margin-left:1%;padding-bottom:1em;'>
+	<ul id='wrapper' style='padding:0;margin:0;width:100%;height:100%;list-style-type:none;'></ul>"; //dis ul is the whole freaking thing
 		
-	  $query = "SELECT place_id,ID,
+	  $query = "SELECT ID,
 	   address,phoneNumber,website,
 	   location,state,latitude,longitude,County,
 	   openSun,closeSun,
@@ -40,30 +78,30 @@ echo"<main id='center' class='column'>
 	   openFri,closeFri,
 	   openSat,closeSat,
 	   Name,patchHours 
-	   FROM vendors 
+	   FROM Vendors 
 	   WHERE Location = '".$_GET['loc']."' 
 	   AND patchHours = 1";
 	   $locationVendorsToFill = mysql_query($query);
 	   $numLocationVendorsToFill = mysql_numrows($locationVendorsToFill);
 	   
-	   $query = "SELECT ID,place_id
-	   FROM vendors 
+/* 	   $query = "SELECT ID,place_id
+	   FROM Vendors 
 	   WHERE Location = '".$_GET['loc']."' 
 	   AND patchHours = 0";
 	   $locationVendorsLookup = mysql_query($query);
-	   $numLocationVendorsLookup = mysql_numrows($locationVendorsLookup);
+	   $numLocationVendorsLookup = mysql_numrows($locationVendorsLookup); */
 	   //ARRAYS TO JSON ENCODE
-	   $vendorPlaceID=array(); //Google place_id
+	  // $vendorPlaceID=array(); //Google place_id
 	   $toFill=array();        //Local database columns
 	   $idToFill=array();	//array to hold id's of places to fill
-	   $idToLookup=array();	//array to hold id's of places to lookup
+	   //$idToLookup=array();	//array to hold id's of places to lookup
 	   
 	   
-	   for($v=0;$v<$numLocationVendorsLookup;++$v){
+	  /*  for($v=0;$v<$numLocationVendorsLookup;++$v){
 		   $id = mysql_result($locationVendorsLookup,$v,"ID");
 		   array_push($vendorPlaceID,mysql_result($locationVendorsLookup,$v,"place_id"));
 		   array_push($idToLookup,$id); //holds all ids for google lookup
-	   }
+	   } */
 	   for($v=0;$v<$numLocationVendorsToFill;++$v){
 		   //this page does not need store hours for everyday. just "today"
 		   $id = mysql_result($locationVendorsToFill,$v,"ID");
@@ -95,6 +133,14 @@ echo"<main id='center' class='column'>
 			$id."openSun" => mysql_result($locationVendorsToFill,$v,"openSun"),
 			$id."closeSun" => mysql_result($locationVendorsToFill,$v,"closeSun")));
 	   }
+	   
+	   
+	   
+	   
+
+		echo"</div>
+		</div>";
+
 ?>
 <script type="text/javascript">
 	//regular javascript globals
@@ -108,16 +154,16 @@ echo"<main id='center' class='column'>
 			echo "var toFill = ". json_encode($toFill, JSON_PRETTY_PRINT) . ";\n";
 			echo "var numLocalVendorsToFill = ". json_encode($numLocationVendorsToFill) . ";\n";
 		}else{echo"var numLocalVendorsToFill = 0;";}
-		if($vendorPlaceID){
+		/* if($vendorPlaceID){
 			echo "var idToLookup  = ".json_encode($idToLookup, JSON_PRETTY_PRINT) . ";\n";
 			echo "var localVendorsIDLookup = ". json_encode($vendorPlaceID) . ";\n";
 			echo "var numLocalVendorsLookup = ". json_encode($numLocationVendorsLookup) . ";\n";
-		}else{echo"var numLocalVendorsLookup = 0;";}
+		}else{echo"var numLocalVendorsLookup = 0;";} */
 ?>
 function initMap() {
-	  var map = new google.maps.Map(document.createElement('div'));
-	  var infowindow = new google.maps.InfoWindow();
-	  var service = new google.maps.places.PlacesService(map);
+	  //var map = new google.maps.Map(document.createElement('div'));
+	  //var infowindow = new google.maps.InfoWindow();
+	  //var service = new google.maps.places.PlacesService(map);
 	  
 	  for (var v = 0; v < numLocalVendorsToFill;v++){
 		  var id = idToFill[v];
@@ -138,13 +184,13 @@ function initMap() {
 		  }
 		  totalVendors+=1;
 	  }
-	  for (var v = 0; v < numLocalVendorsLookup;v++){
+/* 	  for (var v = 0; v < numLocalVendorsLookup;v++){
 		service.getDetails({placeId: localVendorsIDLookup[v]},detailsCallback );
 		totalVendors+=1;
-	  }
+	  } */
 	}//END OF INITMAP
 
-function detailsCallback(place, status) {
+/* function detailsCallback(place, status) {
 		if (status === google.maps.places.PlacesServiceStatus.OK) {
 			var opening = new Date();
 			var closing = new Date();
@@ -158,7 +204,7 @@ function detailsCallback(place, status) {
 		}else{
 			alert("Error with business Lookup");
 		}
-	}
+	} */
 	  
 function theTimeSlingingSlasher(open,close){
 	var opening = new Date();
@@ -212,7 +258,7 @@ function constructFromBackend(id,name,address,phoneNumber,website,timeText){
 }
 
 	  
-function constructFromGoogle(place,open,timeText){
+/* function constructFromGoogle(place,open,timeText){
 	var contentString = '<a href="storeSummary2.php?place_id='+place.place_id+'" style="color:black;background-color:lightblue;text-decoration:none;display:inline-block;width:100%;">'+
 		              '<div style="margin:none;padding:none;width:100%;height:100%;"><h3 style="text-align:center;">'+place.name+'</h3>'+
 			        '<h4 style="text-align:center;width:100%;">'+open+'</h4><center style="font-size:0.8em;">*click here for more info*</center>'+
@@ -236,7 +282,7 @@ function constructFromGoogle(place,open,timeText){
 			//wrapper.insertBefore(newElement,document.getElemenById("distributor"));
 			wrapper.style.height = "100%";
 			//sortStore(wrapper);
-}
+} */
 
 function sortStore(ul){
 	//alert("sorting");

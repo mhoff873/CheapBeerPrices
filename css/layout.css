@@ -73,7 +73,7 @@ body {
 			font-family:Sans-serif;
 			line-height: 1.5em;
 		}
-		
+		/* always sets paragraphs to black text */
 		p {
 			color: black;
 		}
@@ -87,10 +87,6 @@ body {
 		nav ul a {
 			color: dark blue;
 			text-decoration: none;
-		}
-
-		table, th, td {
-			border: 1px solid black;
 		}
 		
 		#header, #footer {
@@ -144,33 +140,45 @@ body {
 		
 		.tabRight{
 		float:right;
-		padding-top: 10px;
-		padding-bottom: 10px;
+		padding-top: 5px;
+		margin: 0;
+                padding: 0;
+                border: 0;
+                font-size: 100%;
+                font: inherit;
+                vertical-align: baseline;
 		/*border-style:solid;
 		border-width:thin;
 		border-color:black;*/
 		width:49%;
+		height:100%;
 		text-align:center;
 		}
+
 		
 		.tabLeft{
 		float:left;
 		padding-top: 10px;
-		padding-bottom: 10px;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		font-size: 100%;
+		font: inherit;
+		vertical-align: baseline;
 		/*border-style:solid;
 		border-width:thin;
 		border-color:black;*/
 		width:49%;
+		height:100%;
 		text-align:center;
 		}
-
+		
 		#hours{
 		border: black;
 		text-align: center;
 		list-style-type: none;
 		width:100%;
 		}
-		
 		
 		#map {
 		height: 24em;
@@ -181,7 +189,7 @@ body {
 		height: 24em;
 		width: 100%;
 		}
-
+		
 		.distributor{			
 		width:47%;
 		margin:1%;
@@ -190,4 +198,11 @@ body {
 		border:solid;
 		border-width:thin;
 		border-color:silver;
+		}
+		
+		#searchProductBar
+		{
+		    width:100%;
+		    box-sizing:border-box;
+		    -moz-box-sizing:border-box;
 		}

@@ -1,6 +1,6 @@
 
 <?php
-	function db_connect(){
+	 function db_connect(){
 		$db_host = 'localhost';
 		$db_user= 'root';
 		$db_pass= 'Beer1234';
@@ -17,42 +17,61 @@
 	function db_close(){
 		global $connection;
 		mysql_close($connection);
-	} 
+	}  
 	db_connect(); //CONNECT TO DATABASE RIGHT AWAY
-	echo"<nav id='left' class='column'>
-			<u><h3 style='text-align:center'> Locations</h3></u>";
-			//$towns = "SELECT Town FROM vendors GROUP BY Town";
-			$states = "SELECT State FROM vendors GROUP BY State";
-			//$resultTowns = mysql_query($towns);
+ 	echo"<nav id='left' class='column'><u><h3 style='text-align:center'> Locations</h3></u>";
+			$towns = "SELECT Location FROM Vendors GROUP BY Location";
+			$states = "SELECT State FROM Vendors GROUP BY State";
+			$resultTowns = mysql_query($towns);
 			$resultStates = mysql_query($states);
-			//$numOfRowsTowns = mysql_numrows($resultTowns);
+			$numOfRowsTowns = mysql_numrows($resultTowns);
 			$numOfRowsStates = mysql_numrows($resultStates); //number of different states
 			echo"<ul>";
 			for ($s=0;$s<$numOfRowsStates;$s++)
 			{	$state = mysql_result($resultStates,$s,"State");
-				$stateLocQuery = "SELECT Location FROM vendors WHERE State='$state' GROUP BY Location";
+				$stateLocQuery = "SELECT Location FROM Vendors WHERE State='$state' GROUP BY Location";
 				$stateLocations =  mysql_query($stateLocQuery);
 				$numOfStateLoc = mysql_numrows($stateLocations);
-				echo"<li style='width:100%;background-color:white;padding-top:0.5em;padding-bottom:0.5em;padding-left:0.25em;'> 
-					<span style='font-size:1.42em;margin-left:2%;margin-top:0.5em;background-color:white;'>$state</span> 
-					<ol style='list-style-type: none;'>";
-						for ($l=0;$l<$numOfStateLoc;$l++)
+				
+				$validLocationInState = false;
+				for ($l=0;$l<$numOfStateLoc;$l++)
 						{	$location = mysql_result($stateLocations,$l,"Location");
-							echo"<li>
-								<form action='location.php' method='get'>
-								
-								<input type='submit' name='loc' value='$location' style='border:solid;border-width:1px;height:2em;margin-top:2px;margin-bottom:2px;font-size:1.2em;width:96%;background:#BCCE98;'/>
-								<input type='hidden' name='state' value='$state'/>
-								</form>
-							    </li>";
-						} 
-				   echo"</ol></li>";
+							$validateLocation="select 1 from `$location` LIMIT 1"; //checks if there are prices at the location
+							 $locWithPriceQuery=mysql_query($validateLocation);
+							 
+							 if($locWithPriceQuery!==false){
+								 $validLocationInState = true;
+								 break;
+							 }
+						}
+						if($validLocationInState){ //if the state has confirmed to have valid locations, print state name and proceed to check locations
+							echo"<li style='width:100%;background-color:white;padding-top:0.5em;padding-bottom:0.5em;padding-left:0.25em;'> ";
+							echo "<span style='font-size:1.42em;margin-left:2%;margin-top:0.5em;background-color:white;'>$state</span> 
+							<ol style='list-style-type: none;'>";
+							for ($l=0;$l<$numOfStateLoc;$l++)  //checks all locations in state for validity
+							{	$location = mysql_result($stateLocations,$l,"Location");
+								$validateLocation="select 1 from `$location` LIMIT 1"; //checks if there are prices at the location
+								 $locWithPriceQuery=mysql_query($validateLocation);
+								 if($locWithPriceQuery!==false){
+									echo"<li>
+										<form action='location.php' method='get'>
+										
+										<input type='submit' name='loc' value='$location' style='border:solid;border-width:1px;height:2em;margin-top:2px;margin-bottom:2px;font-size:1.2em;width:96%;background:#b3d9ff;'/>
+										<input type='hidden' name='state' value='$state'/>
+										</form>
+									    </li>";
+								}
+							} 
+							echo"</ol></li>";
+							}
 			}
-			echo"</ul>";
+			echo"</ul>"; //end of entire unordered list of states and locations
+			
+			echo"</nav>"; 
 	?>
 	
 	
-		</nav>
+		
 		<a href="http://www.fratbench.com">
 			<div id="right" class="column">
 				<h3>Thank You</h3>
@@ -69,7 +88,7 @@
 
 	<div id="footer-wrapper">
 		<footer id="footer">
-		<a href="login.php.html">Login</a> <a href = "Logout.php">Logout</a>
+		<a href="login.php">Login</a> <a href = "Logout.php">Logout</a>
 		<p> cheapbeerprices.com - Copyright &copy;  <?php echo date("Y"); ?></p>
 		</footer>
 	</div>

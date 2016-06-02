@@ -33,9 +33,9 @@ echo"<main id='center' class='column'>
 		<center><div id='indexMap'></div></center>";
 
 	   //graphable vendors
-    	   $query = "SELECT ID,Name,
+    	   $query = "SELECT ID,Name,location,
 	   latitude,longitude 
-	   FROM vendors
+	   FROM Vendors
 	   WHERE latitude <> 0
 	   AND longitude <> 0";
 	   
@@ -44,17 +44,25 @@ echo"<main id='center' class='column'>
 	   $numVendors = (!is_null($vendors))?mysql_numrows($vendors):0;
 	   
 	   //ARRAYS TO JSON ENCODE
-	   $toFill=array();        //Local database columns
+	   $toFill=array();        //Local database columns (name, lat, long)
 	   $idToFill=array();	//array to hold id's of places to fill
 	   
 	   for($v=0;$v<$numVendors;++$v){
-		   $id = mysql_result($vendors,$v,"ID");
-		   array_push($idToFill,$id); //holds all ids for local fill
-		   array_push($toFill,array(  ///all information
+		   $location = mysql_result($vendors,$v,"location"); //find each location for each vendor
+		   $id = mysql_result($vendors,$v,"ID"); //gets the vendor id of each location
+		   $validateLocation="select 1 from `$location` WHERE VendorID = ".$id." LIMIT 1"; //checks if there are prices for the vendor
+		   $locWithPriceQuery=mysql_query($validateLocation);
+		   if($locWithPriceQuery){ //this is how i got this part to work. 
+		   if(mysql_numrows($locWithPriceQuery)){ //only pushes vendors with prices
+			   array_push($idToFill,$id); //holds all ids for local fill
+			   array_push($toFill,array(  ///all information
 			"name" => mysql_result($vendors,$v,"Name"),
 			"latitude"=>mysql_result($vendors,$v,"latitude"),
 			"longitude"=>mysql_result($vendors,$v,"longitude"),
-			));
+			));  
+		   }
+		   }
+		   
 	   }
 ?>
 	<script type="text/javascript">
@@ -89,8 +97,10 @@ function initMap() {
 		     return function() {
 			indexMap.setCenter(new google.maps.LatLng(toFill[i]['latitude'], toFill[i]['longitude']));
 			var contentString = '<div id="content">'+
-			'<a href="storeSummary2.php?ID='+idToFill[i]+''+'"><h1 id="firstHeading" class="firstHeading">'+toFill[i]['name']+
-			'</h1></a></div>';
+			'<h1 id="firstHeading" class="firstHeading">'+toFill[i]['name']+'</h1>'+
+			'<a href="storeProducts.php?ID='+idToFill[i]+''+'"><input type="button" value="Prices"></a>'+
+			'<a href="storeSummary2.php?ID='+idToFill[i]+''+'"><input type="button" value="Store Summary"></a>'+
+			'</div>';
 			infowindow.setContent(contentString);
 			infowindow.open(indexMap, marker);
 		 }
