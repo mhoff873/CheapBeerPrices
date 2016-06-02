@@ -56,10 +56,10 @@ else
 
     /*** database name ***/
     //$mysql_dbname = 'cheapbeerprices';
-    $db_name= 'CheapBeer';
+    $mysql_dbname= 'CheapBeer';
     try
     {
-        $dbh = new PDO("mysql:host=$mysql_hostname;dbname=$db_name", $mysql_username, $mysql_password);
+        $dbh = new PDO("mysql:host=$mysql_hostname;dbname=$mysql_dbname", $mysql_username, $mysql_password);
         /*** $message = a message saying we have connected ***/
 
         /*** set the error mode to excptions ***/
