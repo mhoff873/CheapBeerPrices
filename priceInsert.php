@@ -214,7 +214,7 @@ if ($_SESSION['user_id']){
 											) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_ci;";
 											
 										$insertPrice=" INSERT INTO `".$location."` (`user`, `vendorID`, `productID`, `price`, `timestamp`) VALUES
-										($_SESSION['user_id'],$vendorID, $productID,".$_GET['price'].",NULL)";
+										(".$_SESSION['user_id'].",$vendorID, $productID,".$_GET['price'].",NULL)";
 										
 										echo"<br>";
 										$validateLocation="select 1 from `$location` LIMIT 1"; //checks if there are prices at the location
