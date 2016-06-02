@@ -216,24 +216,34 @@ if ($_SESSION['user_id']){
 										($vendorID, $productID,".$_GET['price'].",NULL)";
 										
 										echo"<br>";
-										if (mysql_query($createTable)) 
-										{
-											if(mysql_query("ALTER TABLE `".$location."` ADD PRIMARY KEY(`priceID`);")){
-												if(mysql_query("ALTER TABLE `".$location."`
-														MODIFY `priceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;")){
-													 if (mysql_query($insertPrice)) {
-														 echo "<p style='color:green;'>Price inserted successfully!</p>";
-													 }else{
-														echo "<p style='color:red;'>Price insertion failed!</p>"; 
-													 }
+										$validateLocation="select 1 from `$location` LIMIT 1"; //checks if there are prices at the location
+								 		$locWithPriceQuery=mysql_query($validateLocation);
+								 		if($locWithPriceQuery!==true){ //this is a table that is not yet created so create table
+											if (mysql_query($createTable)) 
+											{
+												if(mysql_query("ALTER TABLE `".$location."` ADD PRIMARY KEY(`priceID`);")){
+													if(mysql_query("ALTER TABLE `".$location."`
+															MODIFY `priceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;")){
+														 if (mysql_query($insertPrice)) {
+															 echo "<p style='color:green;'>Price inserted successfully!</p>";
+														 }else{
+															echo "<p style='color:red;'>Price insertion failed!</p>"; 
+														 }
+													}else{
+														echo "<p style='color:red;'>Error auto_incrementing the priceID in table '".$location."'</p>". mysql_error ();
+													}
 												}else{
-													echo "<p style='color:red;'>Error auto_incrementing the priceID in table '".$location."'</p>". mysql_error ();
+													echo "<p style='color:red;'>Error adding primary key to table '".$location."'</p>". mysql_error ();
 												}
 											}else{
-												echo "<p style='color:red;'>Error adding primary key to table '".$location."'</p>". mysql_error ();
+												echo "<p style='color:red;'>Error in creating a new price table for location: '".$location."'</p>". mysql_error ();
 											}
-										}else{
-											echo "<p style='color:red;'>Error in validating table: '".$location."'</p>". mysql_error ();
+										}else{ //the table did not have to be created but the price still has to be added. thank you :D
+											if (mysql_query($insertPrice)) {
+												echo "<p style='color:green;'>Price inserted successfully!</p>";
+											}else{
+												echo "<p style='color:red;'>Price insertion failed!</p>"; 
+											}
 										}
 									}
 					
