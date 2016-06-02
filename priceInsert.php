@@ -121,9 +121,9 @@ if ($_SESSION['user_id']){
 		echo"</form><br>";
 	}else{ //t
 		//finds all product names that could happen
-		$query = "SELECT Name FROM Products GROUP BY Name";
+		$query = "SELECT Name FROM products GROUP BY Name";
 		$products = mysql_query($query);
-		$numProducts = mysql_numrows($products);
+		$numproducts = mysql_numrows($products);
 		echo'<form action="priceInsert.php" name="priceInsertData" method="get">';
 		echo'<input type="hidden" name="vendorName" value="'.$_GET["vendorName"].'"><br>
 		<h1>'.$_GET["vendorName"].'</h1>';
@@ -132,13 +132,13 @@ if ($_SESSION['user_id']){
 		
 		if(isset($_GET['productName']) && $_GET['productName']!="Choose one"){ //state has been previously set
 			echo"<option selected='selected'>".$_GET['productName']."</option>";
-			for($p=0;$p<$numProducts;++$p) { 
+			for($p=0;$p<$numproducts;++$p) { 
 				$nameVal = mysql_result($products,$p,"Name");
 				if($stateVal!=$_GET['productName']) //does not print the selected state twice
 					echo'<option value="'.$nameVal.'">'.$nameVal.'</option>';
 			}echo"</select>";
 			//if the state has been selected then the next queries can continue
-			$query = 'SELECT Quantity FROM Products WHERE Name = "'.$_GET["productName"].'" GROUP BY Quantity';
+			$query = 'SELECT Quantity FROM products WHERE Name = "'.$_GET["productName"].'" GROUP BY Quantity';
 			$quantity = mysql_query($query);
 			$numQuantities = mysql_numrows($quantity);
 				if(isset($_GET['productQuantity']) && $_GET['productQuantity']!="Choose one"){ //state has been previously set
@@ -149,7 +149,7 @@ if ($_SESSION['user_id']){
 						if($quantityVal!=$_GET['productQuantity']) //does not print the selected county twice
 							echo'<option value="'.$quantityVal.'">'.$quantityVal.'</option>';
 					}echo"</select>";
-					$query = 'SELECT Volume FROM Products WHERE Quantity = "'.$_GET["productQuantity"].'" 
+					$query = 'SELECT Volume FROM products WHERE Quantity = "'.$_GET["productQuantity"].'" 
 						AND Name = "'.$_GET["productName"].'" GROUP BY Volume';
 					$volume = mysql_query($query);
 					$numVolumes = mysql_numrows($volume);
@@ -162,7 +162,7 @@ if ($_SESSION['user_id']){
 								if($volumeVal!=$_GET['productVolume']) //does not print the selected county twice
 									echo'<option value="'.$volumeVal.'">'.$volumeVal.'</option>';
 							}echo"</select>";
-							$query = 'SELECT Cans FROM Products WHERE Volume = "'.$_GET["productVolume"].'" 
+							$query = 'SELECT Cans FROM products WHERE Volume = "'.$_GET["productVolume"].'" 
 								AND Quantity = "'.$_GET["productQuantity"].'"
 								AND Name = "'.$_GET["productName"].'" GROUP BY Cans';
 							$cans = mysql_query($query);
@@ -272,7 +272,7 @@ if ($_SESSION['user_id']){
 				
 		}else{ //productname has not been previously set
 			echo"<option selected='selected'>Choose one</option>";
-			for($p=0;$p<$numProducts;++$p) { 
+			for($p=0;$p<$numproducts;++$p) { 
 				$nameVal = mysql_result($products,$p,"Name");
 				echo'<option value="'.$nameVal.'">'.$nameVal.'</option>';
 			}echo"</select>";

@@ -35,19 +35,19 @@ echo"<main id='center' class='column'>
 	   //graphable vendors
     	   $query = "SELECT ID,Name,location,
 	   latitude,longitude 
-	   FROM Vendors
+	   FROM vendors
 	   WHERE latitude <> 0
 	   AND longitude <> 0";
 	   
 
 	   $vendors = mysql_query($query);
-	   $numVendors = (!is_null($vendors))?mysql_numrows($vendors):0;
+	   $numvendors = (!is_null($vendors))?mysql_numrows($vendors):0;
 	   
 	   //ARRAYS TO JSON ENCODE
 	   $toFill=array();        //Local database columns (name, lat, long)
 	   $idToFill=array();	//array to hold id's of places to fill
 	   
-	   for($v=0;$v<$numVendors;++$v){
+	   for($v=0;$v<$numvendors;++$v){
 		   $location = mysql_result($vendors,$v,"location"); //find each location for each vendor
 		   $id = mysql_result($vendors,$v,"ID"); //gets the vendor id of each location
 		   $validateLocation="select 1 from `$location` WHERE VendorID = ".$id." LIMIT 1"; //checks if there are prices for the vendor
@@ -71,7 +71,7 @@ echo"<main id='center' class='column'>
 	var toFill =<?php echo json_encode($toFill); ?>; //Local database columns
 	var idToFill =<?php echo json_encode($idToFill); ?>; //array to hold id's of places to fill
 	
-	var numFill=<?php echo json_encode($numVendors); ?>; //int number of business to fill
+	var numFill=<?php echo json_encode($numvendors); ?>; //int number of business to fill
 	
 	
 var indexMap;
@@ -98,7 +98,7 @@ function initMap() {
 			indexMap.setCenter(new google.maps.LatLng(toFill[i]['latitude'], toFill[i]['longitude']));
 			var contentString = '<div id="content">'+
 			'<h1 id="firstHeading" class="firstHeading">'+toFill[i]['name']+'</h1>'+
-			'<a href="storeProducts.php?ID='+idToFill[i]+''+'"><input type="button" value="Prices"></a>'+
+			'<a href="storeproducts.php?ID='+idToFill[i]+''+'"><input type="button" value="Prices"></a>'+
 			'<a href="storeSummary2.php?ID='+idToFill[i]+''+'"><input type="button" value="Store Summary"></a>'+
 			'</div>';
 			infowindow.setContent(contentString);

@@ -61,7 +61,7 @@
 			</td>
 			
 			<td class='tabRight' style='background-color:#707070;'>
-				<h1 style='color:white'>Store Products</h1>
+				<h1 style='color:white'>Store products</h1>
 			</td>
 		</tr>
 	</table>
@@ -76,9 +76,9 @@
 		
 		<td style='width:84%'>";
 		if(isset($_GET['search']))
-			echo"<input style='width:98%;height:2em;font-size:1.2em;font-weight:bold;margin-top:0.5em;margin-left:2%;text-indent: 1em;' type='text' name='search' value='".$_GET['search']."' id='searchProductsBar'>";
+			echo"<input style='width:98%;height:2em;font-size:1.2em;font-weight:bold;margin-top:0.5em;margin-left:2%;text-indent: 1em;' type='text' name='search' value='".$_GET['search']."' id='searchproductsBar'>";
 		else
-			echo"<input style='width:98%;height:2em;font-size:1.2em;font-weight:bold;margin-top:0.5em;margin-left:2%;text-indent: 1em;' type='text' name='search' id='searchProductsBar'>";
+			echo"<input style='width:98%;height:2em;font-size:1.2em;font-weight:bold;margin-top:0.5em;margin-left:2%;text-indent: 1em;' type='text' name='search' id='searchproductsBar'>";
 		echo"</td>
 		<td style='width:16%;text-align:right'>
 			<button type='submit' style='width:100%;height:2em;font-size:1.3em;font-weight:bold;margin-top:0.5em;padding:0;border:0;'>Search</button>
@@ -89,7 +89,7 @@
 /* 	echo"<table style='width:96%;margin-top:0.5em;'>";
 	
 		
-		$catQuery = "SELECT Category FROM Products GROUP BY Category";
+		$catQuery = "SELECT Category FROM products GROUP BY Category";
 		$categories = (!is_null($catQuery))?mysql_query($catQuery):null;
 		
 		
@@ -171,9 +171,9 @@ $productCounter = 0; //counts number of search results or just price results for
 		* Insert price for that vendor or another vendor in that location
 		*
 		*/
-/* 		$numProducts = (!is_null($prices))?mysql_numrows($prices):0;
+/* 		$numproducts = (!is_null($prices))?mysql_numrows($prices):0;
 		$productArray = array();
-		for($i = 0; $i<=$numProducts-1; $i++)//this array_push only works for numeric arrays
+		for($i = 0; $i<=$numproducts-1; $i++)//this array_push only works for numeric arrays
 			array_push($productArray,mysql_result($prices,$i,"productID"));
 			  
 		foreach ($productArray as $pro){
@@ -189,8 +189,8 @@ $productCounter = 0; //counts number of search results or just price results for
 			
 			//query to return data about the product from the product table
 			$nameQuery = (isset($_GET['search']) && $_GET['search']!="")?
-				"SELECT Name,volume,quantity,cans,ABV,Style,Category FROM Products WHERE ID = $pro AND Name LIKE '%$_GET[search]%'"
-				:"SELECT Name,volume,quantity,cans,ABV,Style,Category FROM Products WHERE ID = $pro";
+				"SELECT Name,volume,quantity,cans,ABV,Style,Category FROM products WHERE ID = $pro AND Name LIKE '%$_GET[search]%'"
+				:"SELECT Name,volume,quantity,cans,ABV,Style,Category FROM products WHERE ID = $pro";
 			
 			
 			$proNameQuery = mysql_query($nameQuery);
@@ -240,9 +240,9 @@ $productCounter = 0; //counts number of search results or just price results for
 			* $prices is not NULL, it is a boolean that is neither true or false.
 			* perhaps a try/catch statement could be used if this exception has a name.
 			*/
-			$numProducts = (!is_null($prices))?mysql_numrows($prices):0;
+			$numproducts = (!is_null($prices))?mysql_numrows($prices):0;
 			$productArray = array();
-			for($i = 0; $i<=$numProducts-1; $i++)//this array_push only works because productArray is a numerical array
+			for($i = 0; $i<=$numproducts-1; $i++)//this array_push only works because productArray is a numerical array
 				array_push($productArray,mysql_result($prices,$i,"productID"));
 			//table heading for ABV Comparison table	
 			echo"<tr style='vertical-align:top;text-align:center;height:1em;margin-right:auto;margin-left:auto;background-color:silver;color'>
@@ -262,8 +262,8 @@ $productCounter = 0; //counts number of search results or just price results for
 				WHERE vendorID = $id 
 				AND productID = $pro ORDER BY timestamp DESC LIMIT 1"; //lifts the newest timestamp only
 				$nameQuery = (isset($_GET['search']) && $_GET['search']!="")?
-				"SELECT Name,volume,quantity,cans,ABV,Style,Category FROM Products WHERE ID = $pro AND Name LIKE '%$_GET[search]%'"
-				:"SELECT Name,volume,quantity,cans,ABV,Style,Category FROM Products WHERE ID = $pro";
+				"SELECT Name,volume,quantity,cans,ABV,Style,Category FROM products WHERE ID = $pro AND Name LIKE '%$_GET[search]%'"
+				:"SELECT Name,volume,quantity,cans,ABV,Style,Category FROM products WHERE ID = $pro";
 			
 			
 				$proNameQuery = mysql_query($nameQuery);
