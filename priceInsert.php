@@ -205,15 +205,16 @@ if ($_SESSION['user_id']){
 									}else{
 										$productID = mysql_result($productQuery,0,"ID");
 										$createTable="CREATE TABLE IF NOT EXISTS `".$location."` (
-										        `priceID` int(11) NOT NULL, 
+										    `priceID` int(11) NOT NULL, 
+										    `user` VARCHAR(16) NOT NULL,
 											`vendorID` int(11) NOT NULL,
 											`productID` int(11) NOT NULL,
 											`price` double NOT NULL,
 											`timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 											) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_ci;";
 											
-										$insertPrice=" INSERT INTO `".$location."` (`vendorID`, `productID`, `price`, `timestamp`) VALUES
-										($vendorID, $productID,".$_GET['price'].",NULL)";
+										$insertPrice=" INSERT INTO `".$location."` (`user`, `vendorID`, `productID`, `price`, `timestamp`) VALUES
+										($_SESSION['user_id'],$vendorID, $productID,".$_GET['price'].",NULL)";
 										
 										echo"<br>";
 										$validateLocation="select 1 from `$location` LIMIT 1"; //checks if there are prices at the location
