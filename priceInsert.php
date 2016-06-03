@@ -206,7 +206,7 @@ if ($_SESSION['user_id']){
 										$productID = mysql_result($productQuery,0,"ID");
 										$createTable="CREATE TABLE IF NOT EXISTS `".$location."` (
 										    `priceID` int(11) NOT NULL, 
-										    `user` VARCHAR(16) NOT NULL,
+										    `user` int(11) NOT NULL,
 											`vendorID` int(11) NOT NULL,
 											`productID` int(11) NOT NULL,
 											`price` double NOT NULL,
