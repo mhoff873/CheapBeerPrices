@@ -218,7 +218,7 @@ if ($_SESSION['user_id']){
 										
 										echo"<br>";
 										$validateLocation="select 1 from `$location` LIMIT 1"; //checks if there are prices at the location
-								 		$locWithPriceQuery=mysql_query($validateLocation) or die;
+								 		$locWithPriceQuery=mysql_query($validateLocation); //or die
 
 								 		if(mysql_num_rows($locWithPriceQuery)==0){ //this is a table that is not yet created so create table
 											if (mysql_query($createTable)) 
