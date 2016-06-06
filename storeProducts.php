@@ -262,8 +262,8 @@ $productCounter = 0; //counts number of search results or just price results for
 				WHERE vendorID = $id 
 				AND productID = $pro ORDER BY timestamp DESC LIMIT 1"; //lifts the newest timestamp only
 				$nameQuery = (isset($_GET['search']) && $_GET['search']!="")?
-				"SELECT Name,Volume,Quantity,Cans,ABV,Style FROM products WHERE ID = $pro AND Name LIKE '%$_GET[search]%' ORDER BY Name ASC"
-				:"SELECT Name,Volume,Quantity,Cans,ABV,Style FROM products WHERE ID = $pro ORDER BY Name ASC";
+				"SELECT Name,Volume,Quantity,containerID,ABV,Style FROM products WHERE ID = $pro AND Name LIKE '%$_GET[search]%' ORDER BY Name ASC"
+				:"SELECT Name,Volume,Quantity,containerID,ABV,Style FROM products WHERE ID = $pro ORDER BY Name ASC";
 			
 			
 				$proNameQuery = mysql_query($nameQuery);
@@ -277,7 +277,21 @@ $productCounter = 0; //counts number of search results or just price results for
 					$abv=mysql_result($proNameQuery,0,"ABV");
 					$price=mysql_result($proQuery,0,"price"); //query from the town database
 					$timestamp=mysql_result($proQuery,0,"timestamp");
-					$bc=(mysql_result($proNameQuery,0,"Cans")==1)?"Cans":"Bottles";
+
+					$bc="shoe"; //default container is a shoe
+					//retrieves container id from products
+					$container = mysql_result($proNameQuery,0,"containerID");
+					//queries the container name from the container table
+					$query = "SELECT Name FROM containers WHERE ID = $container ";
+					$contNames = (!is_null($query))?mysql_query($query):null;
+					$containerName = mysql_result($contNames,0,"Name");
+
+					if(!($quantity==1))
+						$bc=$containerName."s"; //adds an s for plural quantities
+					else
+						$bc=$containerName;
+
+					//(mysql_result($proNameQuery,0,"containerID")==1)?"Cans":"Bottles";
 					$dateOfInsertion = new dateTime;
 					$dateOfInsertion->setTimestamp(strtotime($timestamp));
 					echo "<tr style='vertical-align:top;text-align:center;height:1em;margin-right:auto;margin-left:auto;background-color:";
