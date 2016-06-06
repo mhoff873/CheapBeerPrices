@@ -214,6 +214,7 @@ if ($_SESSION['user_id']){
 										
 									if (mysql_num_rows($productQuery)==0){
 										echo "<p style='color:red;'>Product does not exist like that in the product table</p>"; 
+										echo "<p style='color:red;'>Container: ".$_GET['productCans']." containerID: ".$container."</p>"; 
 										echo "<p style='color:red;'>Price insertion failed!</p>"; 
 									}else{
 										$productID = mysql_result($productQuery,0,"ID");
