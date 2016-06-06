@@ -8,9 +8,7 @@ if ($_SESSION['user_id']){
 		$db_host = 'localhost';
 		$db_user= 'root';
 		$db_pass= 'Beer1234';
-		//$db_pass='';
 		$db_name= 'CheapBeer';
-		//$db_name= 'cheapbeerprices';
 		global $connection;
 		$connection = mysql_connect($db_host,$db_user,$db_pass) 
 			or die ("cannot connect to $db_host as $db_user".mysql_error());
@@ -163,7 +161,6 @@ if ($_SESSION['user_id']){
 									echo'<option value="'.$volumeVal.'">'.$volumeVal.'</option>';
 							}echo"</select>";
 
-
 							//here is where the containerIDs are originally determined for the products matching the select criteria
 								$query = 'SELECT containerID FROM products WHERE Volume = "'.$_GET["productVolume"].'" 
 									AND Quantity = "'.$_GET["productQuantity"].'"
@@ -179,42 +176,12 @@ if ($_SESSION['user_id']){
 								echo"<br><select name='productCans' id='productCanForm' onchange='this.form.submit()'>";
 								echo"<option selected='selected'>".$_GET['productCans']."</option>"; //the selected option is default as the previously selected value
 
-								//this part here needs to be a foreach loop
-								//foreach(containerID in cans)
-								//    query name from contaoner table from results matching the containerID
-								//    if the option does not match the previusly set value
-								//          echo out the option 
-								//echo end select
-
-
-
-								
 								foreach ($containerIDArray as $container){
 									$query = "SELECT Name FROM containers WHERE ID = $container ";
 									$contNames = (!is_null($query))?mysql_query($query):null;
-									$containerName = mysql_result($contNames,0,"Name"); //there should only be 1 result for the ID in the containers table
-									if($containerName!=$_GET['productCans'])
+									$containerName = mysql_result($contNames,0,"Name"); //there should only be 1 result
 										echo'<option value="'.$containerName.'">'.$containerName.'</option>';
-
-								}
-
-
-
-
-
-
-
-
-
-
-
-
-								//for($c=0;$c<$numCans;++$c) { 
-								//	$cansVal = (mysql_result($cans,$c,"containerID")==0)?"Bottles":"Cans";
-								//	if($cansVal!=$_GET['productCans']) //does not print the selected county twice
-								//		echo'<option value="'.$cansVal.'">'.$cansVal.'</option>';
-								//}
-								echo"</select>";
+								}echo"</select>";
 								
 								//you are permitted to use the price insert box
 								if(isset($_GET['price'])){
@@ -301,47 +268,13 @@ if ($_SESSION['user_id']){
 							}else{ //cans have not been previously set but volume has
 								echo"<br><select name='productCans' id='vendorLocationForm' onchange='this.form.submit()'>";
 								echo"<option selected='selected'>Choose one</option>"; //Chose one is first by default
-
-
-								//$query = 'SELECT containerID FROM products WHERE Volume = "'.$_GET["productVolume"].'" 
-								//	AND Quantity = "'.$_GET["productQuantity"].'"
-								//	AND Name = "'.$_GET["productName"].'" GROUP BY containerID';
-							//$cont = mysql_query($query); // resource containing all containerIDs for the product
-
-
-
-								//gets all containerIDs
-								//$cont = (!is_null($cont))?mysql_numrows($cont):0;
-
-								//$cont = (!is_null($query))?mysql_query($query):null;
-								//$numContainers = (!is_null($cont))?mysql_numrows($cont):0;
-								//$numContainers = mysql_numrows($cans);
-
-
-								//this too needs to be a foreach loop that queries each container from the containter table based on containterID
-
-								//$containerIDArray = array();
-								//for($i = 0; $i<=$numContainers-1; $i++)//pushing a numerical array of containerIDs
-								//	array_push($containerIDArray,mysql_result($cont,$i,"containerID"));
-
 								
 								foreach ($containerIDArray as $container){
 									$query = "SELECT Name FROM containers WHERE ID = $container ";
 									$contNames = (!is_null($query))?mysql_query($query):null;
 									$containerName = mysql_result($contNames,0,"Name"); //there should only be 1 result for this
 									echo'<option value="'.$containerName.'">'.$containerName.'</option>';
-
-								}
-
-
-
-
-								///for($c=0;$c<$numCans;++$c) { 
-								///	$cansVal = (mysql_result($cans,$c,"containerID")==0)?"Bottles":"Cans";
-								///	echo'<option value="'.$cansVal.'">'.$cansVal.'</option>';
-								///}
-
-								echo"</select>";
+								}echo"</select>";
 							}//end of cans selection
 
 						}else{ //volume has not been previously set but quantity has
