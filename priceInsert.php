@@ -199,14 +199,16 @@ if ($_SESSION['user_id']){
 									$location = mysql_result($locationQuery,0,"Location"); //only selects 1 row (only expects to find 1 name matching)
 
 									//dis binary shit needs to be updated
-									$cans=($_GET['productCans']=="Cans")?1:0;
-
+									//$cans=($_GET['productCans']=="Cans")?1:0;
+									//$query = 'SELECT Name FROM containers WHERE ID = "'.$_GET['productCans'].'"';
+									//$containerQuery = mysql_query($query);
+									//$container = mysql_result($containerQuery,0,"Location"); //only selects 1 row (only expects to find 1 name matching)
 
 
 									$query = 'SELECT ID FROM products WHERE Name = "'.$_GET["productName"].'" 
 										AND Quantity = "'.$_GET["productQuantity"].'" 
 										AND Volume = "'.$_GET["productVolume"].'" 
-										AND Cans = "'.$cans.'"'; //finds productID for price insertion
+										AND containerID = "'.$_GET['productCans'].'"'; //finds productID for price insertion
 									$productQuery = mysql_query($query) //attempts to find product
 										or die ('cannot find product'.$_GET["productName"].mysql_error());
 										
