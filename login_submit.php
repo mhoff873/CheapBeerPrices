@@ -16,12 +16,12 @@ if(!isset( $_POST['phpro_username'], $_POST['phpro_password']))
 /*** check the username is the correct length ***/
 elseif (strlen( $_POST['phpro_username']) > 20 || strlen($_POST['phpro_username']) < 4)
 {
-    $message = 'Incorrect Length for Username';
+    $message = 'Please enter a valid username and password';
 }
 /*** check the password is the correct length ***/
 elseif (strlen( $_POST['phpro_password']) > 20 || strlen($_POST['phpro_password']) < 4)
 {
-    $message = 'Incorrect Length for Password';
+    $message = 'Please enter a valid username and password';
 }
 /*** check the username has only alpha numeric characters ***/
 elseif (ctype_alnum($_POST['phpro_username']) != true)
@@ -55,11 +55,11 @@ else
     $mysql_password = 'Beer1234';
 
     /*** database name ***/
-    //$mysql_dbname = 'cheapbeerprices';
-    $mysql_dbname= 'CheapBeer';
+    $db_name = 'cheapbeerprices';
+    //$db_name= 'CheapBeer';
     try
     {
-        $dbh = new PDO("mysql:host=$mysql_hostname;dbname=$mysql_dbname", $mysql_username, $mysql_password);
+        $dbh = new PDO("mysql:host=$mysql_hostname;dbname=$db_name", $mysql_username, $mysql_password);
         /*** $message = a message saying we have connected ***/
 
         /*** set the error mode to excptions ***/
@@ -108,7 +108,7 @@ else
 
 <html>
 <head>
-<title>PHPRO Login</title>
+<title>CheapBeerPrices Login</title>
 </head>
 <body>
 <p><?php echo $message; ?>

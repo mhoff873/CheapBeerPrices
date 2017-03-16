@@ -8,7 +8,9 @@ if ($_SESSION['user_id']){
 		$db_host = 'localhost';
 		$db_user= 'root';
 		$db_pass= 'Beer1234';
-		$db_name= 'CheapBeer';
+		//$db_pass='';
+		//$db_name= 'CheapBeer';
+		$db_name= 'cheapbeerprices';
 		global $connection;
 		$connection = mysql_connect($db_host,$db_user,$db_pass) 
 			or die ("cannot connect to $db_host as $db_user".mysql_error());
@@ -160,27 +162,19 @@ if ($_SESSION['user_id']){
 								if($volumeVal!=$_GET['productVolume']) //does not print the selected county twice
 									echo'<option value="'.$volumeVal.'">'.$volumeVal.'</option>';
 							}echo"</select>";
-
-							//here is where the containerIDs are originally determined for the products matching the select criteria
-								$query = 'SELECT containerID FROM products WHERE Volume = "'.$_GET["productVolume"].'" 
-									AND Quantity = "'.$_GET["productQuantity"].'"
-									AND Name = "'.$_GET["productName"].'" GROUP BY containerID';
-								$cont = (!is_null($query))?mysql_query($query):null;
-								$numContainers = (!is_null($cont))?mysql_numrows($cont):0;
-
-								$containerIDArray = array();
-								for($i = 0; $i<=$numContainers-1; $i++)//pushing a numerical array of containerIDs
-									array_push($containerIDArray,mysql_result($cont,$i,"containerID"));
+							$query = 'SELECT Cans FROM products WHERE Volume = "'.$_GET["productVolume"].'" 
+								AND Quantity = "'.$_GET["productQuantity"].'"
+								AND Name = "'.$_GET["productName"].'" GROUP BY Cans';
+							$cans = mysql_query($query);
+							$numCans = mysql_numrows($cans);
 							
 							if(isset($_GET['productCans'])&&$_GET['productCans']!="Choose one"){ //state has been previously set
 								echo"<br><select name='productCans' id='productCanForm' onchange='this.form.submit()'>";
-								echo"<option selected='selected'>".$_GET['productCans']."</option>"; //the selected option is default as the previously selected value
-
-								foreach ($containerIDArray as $container){
-									$query = "SELECT Name FROM containers WHERE ID = $container ";
-									$contNames = (!is_null($query))?mysql_query($query):null;
-									$containerName = mysql_result($contNames,0,"Name"); //there should only be 1 result
-										echo'<option value="'.$containerName.'">'.$containerName.'</option>';
+								echo"<option selected='selected'>".$_GET['productCans']."</option>";
+								for($c=0;$c<$numCans;++$c) { 
+									$cansVal = (mysql_result($cans,$c,"Cans")==0)?"Bottles":"Cans";
+									if($cansVal!=$_GET['productCans']) //does not print the selected county twice
+										echo'<option value="'.$cansVal.'">'.$cansVal.'</option>';
 								}echo"</select>";
 								
 								//you are permitted to use the price insert box
@@ -197,69 +191,49 @@ if ($_SESSION['user_id']){
 									$query = 'SELECT Location FROM vendors WHERE Name = "'.$_GET['vendorName'].'"';
 									$locationQuery = mysql_query($query);
 									$location = mysql_result($locationQuery,0,"Location"); //only selects 1 row (only expects to find 1 name matching)
-
-									//dis binary shit needs to be updated
-									//$cans=($_GET['productCans']=="Cans")?1:0;
-									$query = 'SELECT ID FROM containers WHERE Name = "'.$_GET['productCans'].'"';
-									$containerQuery = mysql_query($query);
-									$container = mysql_result($containerQuery,0,"ID"); //only selects 1 row (only expects to find 1 name matching)
-
-
+									$cans=($_GET['productCans']=="Cans")?1:0;
 									$query = 'SELECT ID FROM products WHERE Name = "'.$_GET["productName"].'" 
 										AND Quantity = "'.$_GET["productQuantity"].'" 
 										AND Volume = "'.$_GET["productVolume"].'" 
-										AND containerID = "'.$container.'"'; //finds productID for price insertion
+										AND Cans = "'.$cans.'"'; //finds productID for price insertion
 									$productQuery = mysql_query($query) //attempts to find product
 										or die ('cannot find product'.$_GET["productName"].mysql_error());
 										
 									if (mysql_num_rows($productQuery)==0){
 										echo "<p style='color:red;'>Product does not exist like that in the product table</p>"; 
-										echo "<p style='color:red;'>Container: ".$_GET['productCans']." containerID: ".$container."</p>"; 
 										echo "<p style='color:red;'>Price insertion failed!</p>"; 
 									}else{
 										$productID = mysql_result($productQuery,0,"ID");
 										$createTable="CREATE TABLE IF NOT EXISTS `".$location."` (
-										    `priceID` int(11) NOT NULL, 
-										    `user` int(11) NOT NULL,
-											`vendorID` int(11) NOT NULL,
-											`productID` int(11) NOT NULL,
-											`price` double NOT NULL,
+										        `priceID` int(11) NOT NULL, 
+											`VendorID` int(11) NOT NULL,
+											`ProductID` int(11) NOT NULL,
+											`Price` double NOT NULL,
 											`timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 											) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_ci;";
 											
-										$insertPrice=" INSERT INTO `".$location."` (`user`, `vendorID`, `productID`, `price`, `timestamp`) VALUES
-										(".$_SESSION['user_id'].",$vendorID, $productID,".$_GET['price'].",NULL)";
+										$insertPrice=" INSERT INTO `".$location."` (`VendorID`, `ProductID`, `Price`, `timestamp`) VALUES
+										($vendorID, $productID,".$_GET['price'].",NULL)";
 										
 										echo"<br>";
-										$validateLocation="select 1 from `$location` LIMIT 1"; //checks if there are prices at the location
-								 		$locWithPriceQuery=mysql_query($validateLocation); //or die
-
-								 		if(mysql_num_rows($locWithPriceQuery)==0){ //this is a table that is not yet created so create table
-											if (mysql_query($createTable)) 
-											{
-												if(mysql_query("ALTER TABLE `".$location."` ADD PRIMARY KEY(`priceID`);")){
-													if(mysql_query("ALTER TABLE `".$location."`
-															MODIFY `priceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;")){
-														 if (mysql_query($insertPrice)) {
-															 echo "<p style='color:green;'>Price inserted successfully!</p>";
-														 }else{
-															echo "<p style='color:red;'>Price insertion failed!</p>"; 
-														 }
-													}else{
-														echo "<p style='color:red;'>Error auto_incrementing the priceID in table '".$location."'</p>". mysql_error ();
-													}
+										if (mysql_query($createTable)) 
+										{
+											if(mysql_query("ALTER TABLE `".$location."` ADD PRIMARY KEY(`priceID`);")){
+												if(mysql_query("ALTER TABLE `".$location."`
+														MODIFY `priceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;")){
+													 if (mysql_query($insertPrice)) {
+														 echo "<p style='color:green;'>Price inserted successfully!</p>";
+													 }else{
+														echo "<p style='color:red;'>Price insertion failed!</p>"; 
+													 }
 												}else{
-													echo "<p style='color:red;'>Error adding primary key to table '".$location."'</p>". mysql_error ();
+													echo "<p style='color:red;'>Error auto_incrementing the priceID in table '".$location."'</p>". mysql_error ();
 												}
 											}else{
-												echo "<p style='color:red;'>Error in creating a new price table for location: '".$location."'</p>". mysql_error ();
+												echo "<p style='color:red;'>Error adding primary key to table '".$location."'</p>". mysql_error ();
 											}
-										}else{ //the table did not have to be created but the price still has to be added. thank you :D
-											if (mysql_query($insertPrice)) {
-												echo "<p style='color:green;'>Price inserted successfully!</p>";
-											}else{
-												echo "<p style='color:red;'>Price insertion failed!</p>"; 
-											}
+										}else{
+											echo "<p style='color:red;'>Error in validating table: '".$location."'</p>". mysql_error ();
 										}
 									}
 					
@@ -270,13 +244,10 @@ if ($_SESSION['user_id']){
 					
 							}else{ //cans have not been previously set but volume has
 								echo"<br><select name='productCans' id='vendorLocationForm' onchange='this.form.submit()'>";
-								echo"<option selected='selected'>Choose one</option>"; //Chose one is first by default
-								
-								foreach ($containerIDArray as $container){
-									$query = "SELECT Name FROM containers WHERE ID = $container ";
-									$contNames = (!is_null($query))?mysql_query($query):null;
-									$containerName = mysql_result($contNames,0,"Name"); //there should only be 1 result for this
-									echo'<option value="'.$containerName.'">'.$containerName.'</option>';
+								echo"<option selected='selected'>Choose one</option>";
+								for($c=0;$c<$numCans;++$c) { 
+									$cansVal = (mysql_result($cans,$c,"Cans")==0)?"Bottles":"Cans";
+									echo'<option value="'.$cansVal.'">'.$cansVal.'</option>';
 								}echo"</select>";
 							}//end of cans selection
 
