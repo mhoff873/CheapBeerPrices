@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<!-- Template by quackit.com -->
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="user-scalable=yes">
 	<title>Cheap Beer Prices</title>
 	<link rel="stylesheet" type="text/css" href="css/layout.css">
-	<script src='js/jquery220compressed.js'></script>
 	 <script type="text/javascript">
         var priceTable, asc1 = 1,
             asc2 = 1,
