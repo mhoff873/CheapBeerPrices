@@ -5,9 +5,9 @@ function db_connect1(){
 	$db_host = 'localhost';
 	$db_user= 'root';
 	$db_pass= 'Beer1234';
-		//$db_pass='';
-	$db_name= 'CheapBeer';
-	//$db_name= 'cheapbeerprices';
+	//$db_pass='';
+	//$db_name= 'CheapBeer';
+	$db_name= 'cheapbeerprices';
 	global $connection;
 	$connection = mysql_connect($db_host,$db_user,$db_pass) 
 		or die ("cannot connect to $db_host as $db_user".mysql_error());
@@ -80,7 +80,7 @@ function initMap() {
 	var infowindow = new google.maps.InfoWindow;
 	indexMap = new google.maps.Map(document.getElementById('indexMap'), {
 	  zoom: 11,
-	  center: new google.maps.LatLng(40.454115, -75.786781), //should be set to client's closest location
+	  center: new google.maps.LatLng(40, -75), //should be set to client's closest location
 	  mapTypeId: google.maps.MapTypeId.ROADMAP
 	});
 	
@@ -98,7 +98,7 @@ function initMap() {
 			indexMap.setCenter(new google.maps.LatLng(toFill[i]['latitude'], toFill[i]['longitude']));
 			var contentString = '<div id="content">'+
 			'<h1 id="firstHeading" class="firstHeading">'+toFill[i]['name']+'</h1>'+
-			'<a href="storeProducts.php?ID='+idToFill[i]+''+'"><input type="button" value="Prices"></a>'+
+			'<a href="storeproducts.php?ID='+idToFill[i]+''+'"><input type="button" value="Prices"></a>'+
 			'<a href="storeSummary2.php?ID='+idToFill[i]+''+'"><input type="button" value="Store Summary"></a>'+
 			'</div>';
 			infowindow.setContent(contentString);
