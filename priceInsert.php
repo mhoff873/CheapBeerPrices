@@ -5,12 +5,12 @@ if ($_SESSION['user_id']){
 	include 'header.php';
 	//RETURNS TRUE WHEN COOKIES ARE SET
 	function db_connect1(){
-		$db_host = 'localhost';
-		$db_user= 'root';
-		$db_pass= 'Beer1234';
+		$db_host = ' ';
+		$db_user= ' ';
+		$db_pass= ' ';
 		//$db_pass='';
-		//$db_name= 'CheapBeer';
-		$db_name= 'cheapbeerprices';
+		//$db_name= ' ';
+		$db_name= ' ';
 		global $connection;
 		$connection = mysql_connect($db_host,$db_user,$db_pass) 
 			or die ("cannot connect to $db_host as $db_user".mysql_error());
