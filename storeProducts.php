@@ -1,10 +1,10 @@
 <?php 
 	include 'header.php';
 	function db_connect1(){
-		$db_host = 'localhost';
-		$db_user= 'root';
-		$db_pass= 'Beer1234';
-		$db_name= 'CheapBeer';
+		$db_host = ' ';
+		$db_user= ' ';
+		$db_pass= ' ';
+		$db_name= ' ';
 		global $connection;
 		$connection = mysql_connect($db_host,$db_user,$db_pass) 
 			or die ("cannot connect to $db_host as $db_user".mysql_error());
