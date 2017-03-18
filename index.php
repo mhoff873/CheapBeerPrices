@@ -146,7 +146,7 @@ CoinWidgetCom.go({
   		ga('send', 'pageview');
 
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmv08kSZpkCuBwQEUsqqnxJ7m_ZBro_OQ&signed_in=true&libraries=places&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key= &signed_in=true&libraries=places&callback=initMap" async defer></script>
 <?php 
 db_close1();
 	include 'footer.php';
